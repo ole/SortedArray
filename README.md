@@ -30,6 +30,6 @@ let package = Package(
 
 None.
 
-## Licence
+## License
 
-[MIT licence](https://github.com/ole/SortedArray/blob/master/LICENSE.txt).
+[MIT license](https://github.com/ole/SortedArray/blob/master/LICENSE.txt).
