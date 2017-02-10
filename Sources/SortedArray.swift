@@ -133,7 +133,7 @@ extension SortedArray {
     /// - Complexity: O(1).
     @warn_unqualified_access
     public func min() -> Element? {
-        return _elements.first
+        return first
     }
 
     /// Returns the maximum element in the sequence.
@@ -141,7 +141,7 @@ extension SortedArray {
     /// - Complexity: O(1).
     @warn_unqualified_access
     public func max() -> Element? {
-        return _elements.last
+        return last
     }
 }
 
