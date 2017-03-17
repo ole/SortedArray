@@ -151,6 +151,11 @@ class SortedArrayTests: XCTestCase {
         let description = String(reflecting: sut)
         XCTAssertEqual(description, "<SortedArray> [\"a\", \"b\", \"c\"]")
     }
+
+    func testFilter() {
+        let sut = SortedArray(unsorted: ["a", "b", "c"])
+        assertElementsEqual(sut.filter { $0 != "a" }, ["b", "c"])
+    }
 }
 
 extension SortedArrayTests {

@@ -97,6 +97,10 @@ extension SortedArray: RandomAccessCollection {
     public subscript(position: Index) -> Element {
         return _elements[position]
     }
+
+    public func filter(_ isIncluded: (Element) throws -> Bool) rethrows -> SortedArray<Element> {
+        return SortedArray(sorted: try filter(isIncluded), areInIncreasingOrder: areInIncreasingOrder)
+    }
 }
 
 extension SortedArray: CustomStringConvertible, CustomDebugStringConvertible {
