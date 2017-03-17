@@ -156,6 +156,24 @@ class SortedArrayTests: XCTestCase {
         let sut = SortedArray(unsorted: ["a", "b", "c"])
         assertElementsEqual(sut.filter { $0 != "a" }, ["b", "c"])
     }
+
+    func testRemoveAtBeginningPreservesSortOrder() {
+        var sut = SortedArray(unsorted: 1...3)
+        sut.remove(1)
+        assertElementsEqual(sut, [2,3])
+    }
+
+    func testRemoveInMiddlePreservesSortOrder() {
+        var sut = SortedArray(unsorted: 1...5)
+        sut.remove(4)
+        assertElementsEqual(sut, [1,2,3,5])
+    }
+
+    func testRemoveAtEndPreservesSortOrder() {
+        var sut = SortedArray(unsorted: 1...3)
+        sut.remove(3)
+        assertElementsEqual(sut, [1,2])
+    }
 }
 
 extension SortedArrayTests {
@@ -183,7 +201,10 @@ extension SortedArrayTests {
             ("testMin", testMin),
             ("testMax", testMax),
             ("testCustomStringConvertible", testCustomStringConvertible),
-            ("testCustomDebugStringConvertible", testCustomDebugStringConvertible)
+            ("testCustomDebugStringConvertible", testCustomDebugStringConvertible),
+            ("testRemoveAtBeginningPreservesSortOrder", testRemoveAtBeginningPreservesSortOrder),
+            ("testRemoveInMiddlePreservesSortOrder", testRemoveInMiddlePreservesSortOrder),
+            ("testRemoveAtEndPreservesSortOrder", testRemoveAtEndPreservesSortOrder),
         ]
     }
 }
