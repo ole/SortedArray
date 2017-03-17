@@ -183,7 +183,8 @@ extension SortedArrayTests {
             ("testMin", testMin),
             ("testMax", testMax),
             ("testCustomStringConvertible", testCustomStringConvertible),
-            ("testCustomDebugStringConvertible", testCustomDebugStringConvertible)
+            ("testCustomDebugStringConvertible", testCustomDebugStringConvertible),
+            ("testFilter", testFilter),
         ]
     }
 }
