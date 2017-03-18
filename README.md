@@ -8,6 +8,10 @@ Written by Ole Begemann, February 2017.
 
 For more info, see my accompanying [blog article](https://oleb.net/blog/2017/02/sorted-array/).
 
+## Status
+
+[![Build Status](https://travis-ci.org/ole/SortedArray.svg?branch=master)](https://travis-ci.org/ole/SortedArray)
+
 ## Usage
 
 Clone the repository and add or copy `SortedArray.swift` to your project. It has no dependencies.
