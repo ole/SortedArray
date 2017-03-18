@@ -152,10 +152,17 @@ class SortedArrayTests: XCTestCase {
         XCTAssertEqual(description, "<SortedArray> [\"a\", \"b\", \"c\"]")
     }
 
-    func testFilter() {
-        let sut = SortedArray(unsorted: ["a", "b", "c"])
-        assertElementsEqual(sut.filter { $0 != "a" }, ["b", "c"])
+    func testFilterReturnsSortedArray() {
+        let source = SortedArray(unsorted: [3,2,1])
+        let sut = source.filter { $0 % 2 == 0 }
+        XCTAssert(type(of: sut) == SortedArray<Int>.self)
     }
+
+    func testFilterMaintainsSortOrder() {
+        let sut = SortedArray(unsorted: ["b", "a", "c", "a", "d", "A"])
+        assertElementsEqual(sut.filter { $0 != "a" }, ["A", "b", "c", "d"])
+    }
+
 }
 
 extension SortedArrayTests {
@@ -184,7 +191,8 @@ extension SortedArrayTests {
             ("testMax", testMax),
             ("testCustomStringConvertible", testCustomStringConvertible),
             ("testCustomDebugStringConvertible", testCustomDebugStringConvertible),
-            ("testFilter", testFilter),
+            ("testFilterReturnsSortedArray", testFilterReturnsSortedArray),
+            ("testFilterMaintainsSortOrder", testFilterMaintainsSortOrder),
         ]
     }
 }
