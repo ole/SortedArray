@@ -99,7 +99,7 @@ extension SortedArray: RandomAccessCollection {
     }
 
     public func filter(_ isIncluded: (Element) throws -> Bool) rethrows -> SortedArray<Element> {
-        let newElements: [Element] = try filter(isIncluded)
+        let newElements = try _elements.filter(isIncluded)
         return SortedArray(sorted: newElements, areInIncreasingOrder: areInIncreasingOrder)
     }
 }
