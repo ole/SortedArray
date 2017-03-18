@@ -1,0 +1,29 @@
+matrix:
+  include:
+    - os: osx
+      language: generic
+      # Xcode version implicitly defines the Swift version to be used on macOS.
+      osx_image: xcode8.2
+
+    - os: linux
+      language: generic
+      sudo: required
+      services:
+        - docker
+      env:
+        # The Docker image to use on Linux in Docker notation,
+        # e.g. "swift" or "myusername/myswift" or "swift:3.0.2".
+        # The image must have Swift installed so that the `swift`
+        # command is in the `$PATH`.
+        #
+        # I recommend Docker Hub's "official" (not maintained by Apple)
+        # Swift image at https://hub.docker.com/r/_/swift/. Its name
+        # is simply "swift".
+        #
+        # You can use tags to select a specific Swift version if the
+        # image supports it, e.g. "swift:3.0.2" or "swift:latest".
+        DOCKER_IMAGE="swift:3.0.2"
+
+script:
+  - chmod ugo+x ./scripts/travis-build-script.sh
+  - ./scripts/travis-build-script.sh
