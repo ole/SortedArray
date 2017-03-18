@@ -1,0 +1,6 @@
+os: osx
+language: objective-c
+osx_image: xcode8.2
+script:
+  - swift build
+  - swift test
