@@ -106,8 +106,11 @@ extension SortedArray: RandomAccessCollection {
         return _elements[position]
     }
 
+    /// Like `Sequence.filter(_:)`, but returns a `SortedArray` instead of an `Array`.
+    /// We can do this efficiently because filtering doesn't change the sort order.
     public func filter(_ isIncluded: (Element) throws -> Bool) rethrows -> SortedArray<Element> {
-        return SortedArray(sorted: try filter(isIncluded), areInIncreasingOrder: areInIncreasingOrder)
+        let newElements = try _elements.filter(isIncluded)
+        return SortedArray(sorted: newElements, areInIncreasingOrder: areInIncreasingOrder)
     }
 }
 
@@ -145,7 +148,7 @@ extension SortedArray {
     /// - Complexity: O(1).
     @warn_unqualified_access
     public func min() -> Element? {
-        return _elements.first
+        return first
     }
 
     /// Returns the maximum element in the sequence.
@@ -153,7 +156,7 @@ extension SortedArray {
     /// - Complexity: O(1).
     @warn_unqualified_access
     public func max() -> Element? {
-        return _elements.last
+        return last
     }
 }
 

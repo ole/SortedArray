@@ -202,6 +202,7 @@ extension SortedArrayTests {
             ("testMax", testMax),
             ("testCustomStringConvertible", testCustomStringConvertible),
             ("testCustomDebugStringConvertible", testCustomDebugStringConvertible),
+            ("testFilter", testFilter),
             ("testRemoveAtBeginningPreservesSortOrder", testRemoveAtBeginningPreservesSortOrder),
             ("testRemoveInMiddlePreservesSortOrder", testRemoveInMiddlePreservesSortOrder),
             ("testRemoveAtEndPreservesSortOrder", testRemoveAtEndPreservesSortOrder),
