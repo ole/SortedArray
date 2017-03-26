@@ -57,14 +57,6 @@ public struct SortedArray<Element> {
         _elements.append(contentsOf: newElements)
         _elements.sort(by: areInIncreasingOrder)
     }
-
-    /// Removes an element from the array, preserving the sort order.
-    ///
-    /// - Complexity: O(_n_), where _n_ is the size of the array.
-    public mutating func remove(_ element: Element) {
-        guard let index = index(of: element) else { return }
-        _elements.remove(at: index)
-    }
 }
 
 extension SortedArray where Element: Comparable {
@@ -121,6 +113,115 @@ extension SortedArray: CustomStringConvertible, CustomDebugStringConvertible {
 
     public var debugDescription: String {
         return "<SortedArray> \(String(reflecting: _elements))"
+    }
+}
+
+// MARK: - Removing elements. This is mostly a reimplementation of part `RangeReplaceableCollection`'s interface. `SortedArray` can't conform to `RangeReplaceableCollection` because some of that protocol's semantics (e.g. `append(_:)` don't fit `SortedArray`'s semantics.
+extension SortedArray {
+    /// Removes and returns the element at the specified position.
+    ///
+    /// - Parameter index: The position of the element to remove. `index` must be a valid index of the array.
+    /// - Returns: The element at the specified index.
+    /// - Complexity: O(_n_), where _n_ is the length of the array.
+    public mutating func remove(at index: Int) -> Element {
+        return _elements.remove(at: index)
+    }
+
+    /// Removes the elements in the specified subrange from the array.
+    ///
+    /// - Parameter bounds: The range of the array to be removed. The
+    ///   bounds of the range must be valid indices of the array.
+    ///
+    /// - Complexity: O(_n_), where _n_ is the length of the array.
+    public mutating func removeSubrange(_ bounds: Range<Int>) {
+        _elements.removeSubrange(bounds)
+    }
+
+    /// Removes the elements in the specified subrange from the array.
+    ///
+    /// - Parameter bounds: The range of the array to be removed. The
+    ///   bounds of the range must be valid indices of the array.
+    ///
+    /// - Complexity: O(_n_), where _n_ is the length of the array.
+    public mutating func removeSubrange(_ bounds: ClosedRange<Int>) {
+        _elements.removeSubrange(bounds)
+    }
+
+    /// Removes the elements in the specified subrange from the array.
+    ///
+    /// - Parameter bounds: The range of the array to be removed. The
+    ///   bounds of the range must be valid indices of the array.
+    ///
+    /// - Complexity: O(_n_), where _n_ is the length of the array.
+    public mutating func removeSubrange(_ bounds: CountableRange<Int>) {
+        _elements.removeSubrange(bounds)
+    }
+
+    /// Removes the elements in the specified subrange from the array.
+    ///
+    /// - Parameter bounds: The range of the array to be removed. The
+    ///   bounds of the range must be valid indices of the array.
+    ///
+    /// - Complexity: O(_n_), where _n_ is the length of the array.
+    public mutating func removeSubrange(_ bounds: CountableClosedRange<Int>) {
+        _elements.removeSubrange(bounds)
+    }
+
+    /// Removes the specified number of elements from the beginning of the
+    /// array.
+    ///
+    /// - Parameter n: The number of elements to remove from the array.
+    ///   `n` must be greater than or equal to zero and must not exceed the
+    ///   number of elements in the array.
+    ///
+    /// - Complexity: O(_n_), where _n_ is the length of the array.
+    public mutating func removeFirst(_ n: Int) {
+        _elements.removeFirst(n)
+    }
+
+    /// Removes and returns the first element of the array.
+    ///
+    /// - Precondition: The array must not be empty.
+    /// - Returns: The removed element.
+    /// - Complexity: O(_n_), where _n_ is the length of the collection.
+    public mutating func removeFirst() -> Element {
+        return _elements.removeFirst()
+    }
+
+    /// Removes and returns the last element of the array.
+    ///
+    /// - Precondition: The collection must not be empty.
+    /// - Returns: The last element of the collection.
+    /// - Complexity: O(1)
+    public mutating func removeLast() -> Element {
+        return _elements.removeLast()
+    }
+
+    /// Removes the given number of elements from the end of the array.
+    ///
+    /// - Parameter n: The number of elements to remove. `n` must be greater
+    ///   than or equal to zero, and must be less than or equal to the number of
+    ///   elements in the array.
+    /// - Complexity: O(1).
+    public mutating func removeLast(_ n: Int) {
+        _elements.removeLast(n)
+    }
+
+    /// Removes all elements from the array.
+    ///
+    /// - Parameter keepCapacity: Pass `true` to keep the existing capacity of the array after removing its elements. The default value is `false`.
+    ///
+    /// - Complexity: O(_n_), where _n_ is the length of the array.
+    public mutating func removeAll(keepingCapacity keepCapacity: Bool = true) {
+        _elements.removeAll(keepingCapacity: keepCapacity)
+    }
+
+    /// Removes an element from the array. If the array contains multiple instances of `element`, this method only removes the first one.
+    ///
+    /// - Complexity: O(_n_), where _n_ is the size of the array.
+    public mutating func remove(_ element: Element) {
+        guard let index = index(of: element) else { return }
+        _elements.remove(at: index)
     }
 }
 
