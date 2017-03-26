@@ -10,6 +10,14 @@ class SortedArrayTests: XCTestCase {
         super.tearDown()
     }
 
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+            let darwinTestCount = Int(SortedArrayTests.defaultTestSuite().testCaseCount)
+            let linuxTestCount = SortedArrayTests.allTests.count
+            XCTAssertEqual(linuxTestCount, darwinTestCount, "allTests (used for testing on Linux) is missing \(darwinTestCount - linuxTestCount) tests")
+        #endif
+    }
+
     func testInitUnsortedSorts() {
         let sut = SortedArray(unsorted: [3,4,2,1], areInIncreasingOrder: <)
         assertElementsEqual(sut, [1,2,3,4])
@@ -224,6 +232,7 @@ class SortedArrayTests: XCTestCase {
 extension SortedArrayTests {
     static var allTests : [(String, (SortedArrayTests) -> () throws -> Void)] {
         return [
+            ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests),
             ("testInitUnsortedSorts", testInitUnsortedSorts),
             ("testInitSortedDoesntResort", testInitSortedDoesntResort),
             ("testSortedArrayCanUseArbitraryComparisonPredicate", testSortedArrayCanUseArbitraryComparisonPredicate),
