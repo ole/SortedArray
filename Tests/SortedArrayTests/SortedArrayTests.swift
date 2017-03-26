@@ -152,17 +152,73 @@ class SortedArrayTests: XCTestCase {
         XCTAssertEqual(description, "<SortedArray> [\"a\", \"b\", \"c\"]")
     }
 
-    func testFilterReturnsSortedArray() {
-        let source = SortedArray(unsorted: [3,2,1])
-        let sut = source.filter { $0 % 2 == 0 }
-        XCTAssert(type(of: sut) == SortedArray<Int>.self)
+    func testFilter() {
+        let sut = SortedArray(unsorted: ["a", "b", "c"])
+        assertElementsEqual(sut.filter { $0 != "a" }, ["b", "c"])
     }
 
-    func testFilterMaintainsSortOrder() {
-        let sut = SortedArray(unsorted: ["b", "a", "c", "a", "d", "A"])
-        assertElementsEqual(sut.filter { $0 != "a" }, ["A", "b", "c", "d"])
+    func testRemoveAtIndex() {
+        var sut = SortedArray(unsorted: [3,4,2,1])
+        let removedElement = sut.remove(at: 1)
+        assertElementsEqual(sut, [1,3,4])
+        XCTAssertEqual(removedElement, 2)
     }
 
+    func testRemoveSubrange() {
+        var sut = SortedArray(unsorted: ["a","d","c","b"])
+        sut.removeSubrange(2..<4)
+        assertElementsEqual(sut, ["a","b"])
+    }
+
+    func testRemoveFirst() {
+        var sut = SortedArray(unsorted: [3,4,2,1])
+        let removedElement = sut.removeFirst()
+        assertElementsEqual(sut, [2,3,4])
+        XCTAssertEqual(removedElement, 1)
+    }
+
+    func testRemoveFirstN() {
+        var sut = SortedArray(unsorted: [3,4,2,1])
+        sut.removeFirst(2)
+        assertElementsEqual(sut, [3,4])
+    }
+
+    func testRemoveLast() {
+        var sut = SortedArray(unsorted: [3,4,2,1])
+        let removedElement = sut.removeLast()
+        assertElementsEqual(sut, [1,2,3])
+        XCTAssertEqual(removedElement, 4)
+    }
+
+    func testRemoveLastN() {
+        var sut = SortedArray(unsorted: [3,4,2,1])
+        sut.removeLast(2)
+        assertElementsEqual(sut, [1,2])
+    }
+
+    func testRemoveAll() {
+        var sut = SortedArray(unsorted: ["a","d","c","b"])
+        sut.removeAll()
+        assertElementsEqual(sut, [])
+    }
+
+    func testRemoveElementAtBeginningPreservesSortOrder() {
+        var sut = SortedArray(unsorted: 1...3)
+        sut.remove(1)
+        assertElementsEqual(sut, [2,3])
+    }
+
+    func testRemoveElementInMiddlePreservesSortOrder() {
+        var sut = SortedArray(unsorted: 1...5)
+        sut.remove(4)
+        assertElementsEqual(sut, [1,2,3,5])
+    }
+
+    func testRemoveElementAtEndPreservesSortOrder() {
+        var sut = SortedArray(unsorted: 1...3)
+        sut.remove(3)
+        assertElementsEqual(sut, [1,2])
+    }
 }
 
 extension SortedArrayTests {
@@ -191,8 +247,17 @@ extension SortedArrayTests {
             ("testMax", testMax),
             ("testCustomStringConvertible", testCustomStringConvertible),
             ("testCustomDebugStringConvertible", testCustomDebugStringConvertible),
-            ("testFilterReturnsSortedArray", testFilterReturnsSortedArray),
-            ("testFilterMaintainsSortOrder", testFilterMaintainsSortOrder),
+            ("testFilter", testFilter),
+            ("testRemoveAtIndex", testRemoveAtIndex),
+            ("testRemoveSubrange", testRemoveSubrange),
+            ("testRemoveFirst", testRemoveFirst),
+            ("testRemoveFirstN", testRemoveFirstN),
+            ("testRemoveLast", testRemoveLast),
+            ("testRemoveLastN", testRemoveLastN),
+            ("testRemoveAll", testRemoveAll),
+            ("testRemoveElementAtBeginningPreservesSortOrder", testRemoveElementAtBeginningPreservesSortOrder),
+            ("testRemoveElementInMiddlePreservesSortOrder", testRemoveElementInMiddlePreservesSortOrder),
+            ("testRemoveElementAtEndPreservesSortOrder", testRemoveElementAtEndPreservesSortOrder),
         ]
     }
 }
