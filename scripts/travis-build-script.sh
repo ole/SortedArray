@@ -8,9 +8,16 @@ echo "Running on OS: ${TRAVIS_OS_NAME}"
 
 if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
     # macOS
+    # 1. Test using Swift Package Manager
     swift build --clean
     swift build
     swift test
+
+    # 2. Test using xcodebuild
+    set -o pipefail
+    xcodebuild test -scheme SortedArray-macOS | xcpretty
+    xcodebuild test -scheme SortedArray-iOS -destination "platform=iOS Simulator,name=iPhone 7,OS=10.1" | xcpretty
+    xcodebuild test -scheme SortedArray-tvOS -destination "platform=tvOS Simulator,name=Apple TV 1080p" | xcpretty
 elif [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     # Linux
     echo "Using Docker image: ${DOCKER_IMAGE}"
