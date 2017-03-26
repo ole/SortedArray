@@ -18,6 +18,8 @@ if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
     xcodebuild test -scheme SortedArray-macOS | xcpretty
     xcodebuild test -scheme SortedArray-iOS -destination "platform=iOS Simulator,name=iPhone 7,OS=10.1" | xcpretty
     xcodebuild test -scheme SortedArray-tvOS -destination "platform=tvOS Simulator,name=Apple TV 1080p" | xcpretty
+    # watchOS doesn't support unit tests.
+    xcodebuild build -scheme SortedArray-watchOS -destination="platform=watchOS Simulator,name=Apple Watch - 38mm" | xcpretty
 elif [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     # Linux
     echo "Using Docker image: ${DOCKER_IMAGE}"
