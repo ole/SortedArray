@@ -60,7 +60,7 @@ public struct SortedArray<Element> {
 
     /// Removes an element from the array, preserving the sort order.
     ///
-    /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
+    /// - Complexity: O(_n_), where _n_ is the size of the array.
     public mutating func remove(_ element: Element) {
         guard let index = index(of: element) else { return }
         _elements.remove(at: index)
