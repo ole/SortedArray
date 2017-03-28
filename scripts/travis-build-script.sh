@@ -4,17 +4,19 @@
 # <https://travis-ci.org/>. Supports testing Swift Package Manager
 # packages on macOS and Linux.
 
+set -ue -o pipefail
+
 echo "Running on OS: ${TRAVIS_OS_NAME}"
 
 if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
     # macOS
     # 1. Test using Swift Package Manager
+    swift --version
     swift build --clean
     swift build
     swift test
 
     # 2. Test using xcodebuild
-    set -o pipefail
     xcodebuild test -scheme SortedArray-macOS | xcpretty
     xcodebuild test -scheme SortedArray-iOS -destination "platform=iOS Simulator,name=iPhone 7,OS=10.1" | xcpretty
     xcodebuild test -scheme SortedArray-tvOS -destination "platform=tvOS Simulator,name=Apple TV 1080p" | xcpretty
@@ -29,5 +31,5 @@ elif [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     # Share the current directory (where Travis checked out the repository)
     # with the Docker container.
     # Then, in the container, cd into that directory and run the tests.
-    docker run --volume "$(pwd):/root/repo" ${DOCKER_IMAGE} /bin/bash -c "cd /root/repo; swift build --clean; swift build; swift test"
+    docker run --volume "$(pwd):/root/repo" ${DOCKER_IMAGE} /bin/bash -c "cd /root/repo; swift --version; swift build --clean; swift build; swift test"
 fi
