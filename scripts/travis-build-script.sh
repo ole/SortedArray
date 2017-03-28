@@ -27,9 +27,9 @@ elif [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     echo "Using Docker image: ${DOCKER_IMAGE}"
     # Download the Docker container. This is not strictly necessary since
     # docker run would automatically download a missing container.
-    docker pull ${DOCKER_IMAGE}
+    docker pull "${DOCKER_IMAGE}"
     # Share the current directory (where Travis checked out the repository)
     # with the Docker container.
     # Then, in the container, cd into that directory and run the tests.
-    docker run --volume "$(pwd):/root/repo" ${DOCKER_IMAGE} /bin/bash -c "cd /root/repo; swift --version; swift build --clean; swift build; swift test"
+    docker run --volume "$(pwd):/root/repo" "${DOCKER_IMAGE}" /bin/bash -c "cd /root/repo; swift --version; swift build --clean; swift build; swift test"
 fi
