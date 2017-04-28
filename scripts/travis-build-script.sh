@@ -12,8 +12,8 @@ if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
     # macOS
     # 1. Test using Swift Package Manager
     swift --version
+    # Replace with swift package clean when dropping Swift 3.0 support.
     swift build --clean
-    swift build
     swift test
 
     # 2. Test using xcodebuild
@@ -31,5 +31,5 @@ elif [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     # Share the current directory (where Travis checked out the repository)
     # with the Docker container.
     # Then, in the container, cd into that directory and run the tests.
-    docker run --volume "$(pwd):/root/repo" "${DOCKER_IMAGE}" /bin/bash -c "cd /root/repo; swift --version; swift build --clean; swift build; swift test"
+    docker run --volume "$(pwd):/package" "${DOCKER_IMAGE}" /bin/bash -c "cd /package; swift --version; swift build --clean; swift test"
 fi
