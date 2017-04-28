@@ -229,7 +229,7 @@ class SortedArrayTests: XCTestCase {
     }
 
   func testIsEqual() {
-      let sut = SortedArray(unsorted: 1...3)
+      let sut = SortedArray(unsorted: [3,2,1])
       XCTAssertTrue(sut == SortedArray(unsorted: 1...3))
   }
 
