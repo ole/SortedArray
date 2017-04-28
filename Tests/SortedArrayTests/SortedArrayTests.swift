@@ -229,15 +229,13 @@ class SortedArrayTests: XCTestCase {
     }
 
   func testIsEqual() {
-    let sut = SortedArray(unsorted: 1...3)
-
-    XCTAssertTrue(sut == SortedArray(unsorted: 1...3))
+      let sut = SortedArray(unsorted: 1...3)
+      XCTAssertTrue(sut == SortedArray(unsorted: 1...3))
   }
 
   func testIsNotEqual() {
-    let sut = SortedArray(unsorted: 1...3)
-
-    XCTAssertTrue(sut != SortedArray(unsorted: 1...4))
+      let sut = SortedArray(unsorted: 1...3)
+      XCTAssertTrue(sut != SortedArray(unsorted: 1...4))
   }
 }
 

@@ -315,9 +315,9 @@ extension SortedArray {
 }
 
 public func ==<Element: Equatable> (lhs: SortedArray<Element>, rhs: SortedArray<Element>) -> Bool {
-  return lhs._elements == rhs._elements
+    return lhs._elements == rhs._elements
 }
 
 public func !=<Element: Equatable> (lhs: SortedArray<Element>, rhs: SortedArray<Element>) -> Bool {
-  return lhs._elements != rhs._elements
+    return lhs._elements != rhs._elements
 }
