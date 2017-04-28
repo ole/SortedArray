@@ -227,6 +227,18 @@ class SortedArrayTests: XCTestCase {
         sut.remove(3)
         assertElementsEqual(sut, [1,2])
     }
+
+  func testIsEqual() {
+    let sut = SortedArray(unsorted: 1...3)
+
+    XCTAssertTrue(sut == SortedArray(unsorted: 1...3))
+  }
+
+  func testIsNotEqual() {
+    let sut = SortedArray(unsorted: 1...3)
+
+    XCTAssertTrue(sut != SortedArray(unsorted: 1...4))
+  }
 }
 
 extension SortedArrayTests {
@@ -267,6 +279,8 @@ extension SortedArrayTests {
             ("testRemoveElementAtBeginningPreservesSortOrder", testRemoveElementAtBeginningPreservesSortOrder),
             ("testRemoveElementInMiddlePreservesSortOrder", testRemoveElementInMiddlePreservesSortOrder),
             ("testRemoveElementAtEndPreservesSortOrder", testRemoveElementAtEndPreservesSortOrder),
+            ("testImplements==", testIsEqual),
+            ("testImplements!=", testIsNotEqual),
         ]
     }
 }

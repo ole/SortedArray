@@ -313,3 +313,11 @@ extension SortedArray {
         return .notFound(insertAt: left)
     }
 }
+
+public func ==<Element: Equatable> (lhs: SortedArray<Element>, rhs: SortedArray<Element>) -> Bool {
+  return lhs._elements == rhs._elements
+}
+
+public func !=<Element: Equatable> (lhs: SortedArray<Element>, rhs: SortedArray<Element>) -> Bool {
+  return lhs._elements != rhs._elements
+}
