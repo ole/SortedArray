@@ -123,6 +123,7 @@ extension SortedArray {
     /// - Parameter index: The position of the element to remove. `index` must be a valid index of the array.
     /// - Returns: The element at the specified index.
     /// - Complexity: O(_n_), where _n_ is the length of the array.
+    @discardableResult
     public mutating func remove(at index: Int) -> Element {
         return _elements.remove(at: index)
     }
@@ -184,6 +185,7 @@ extension SortedArray {
     /// - Precondition: The array must not be empty.
     /// - Returns: The removed element.
     /// - Complexity: O(_n_), where _n_ is the length of the collection.
+    @discardableResult
     public mutating func removeFirst() -> Element {
         return _elements.removeFirst()
     }
@@ -193,6 +195,7 @@ extension SortedArray {
     /// - Precondition: The collection must not be empty.
     /// - Returns: The last element of the collection.
     /// - Complexity: O(1)
+    @discardableResult
     public mutating func removeLast() -> Element {
         return _elements.removeLast()
     }
