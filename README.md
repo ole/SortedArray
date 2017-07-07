@@ -6,7 +6,7 @@ Provides the `SortedArray` type, an array that keeps its elements sorted accordi
 
 Written by Ole Begemann, February 2017.
 
-For more info, see my accompanying [blog article](https://oleb.net/blog/2017/02/sorted-array/).
+For more info, see the [GitHub repo](https://github.com/ole/SortedArray) and my accompanying [blog article](https://oleb.net/blog/2017/02/sorted-array/).
 
 ## Status
 
