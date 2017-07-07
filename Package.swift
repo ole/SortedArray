@@ -1,3 +1,4 @@
+// swift-tools-version:3.1
 import PackageDescription
 
 /// Provides the `SortedArray` type, an array that keeps its elements
@@ -7,5 +8,6 @@ import PackageDescription
 /// - Seealso: https://blog/2017/02/sorted-array/
 ///
 let package = Package(
-    name: "SortedArray"
+    name: "SortedArray",
+    swiftLanguageVersions: [3, 4]
 )
