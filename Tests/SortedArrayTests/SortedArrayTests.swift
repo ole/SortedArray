@@ -12,7 +12,11 @@ class SortedArrayTests: XCTestCase {
 
     func testLinuxTestSuiteIncludesAllTests() {
         #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-            let darwinTestCount = Int(SortedArrayTests.defaultTestSuite().testCaseCount)
+            #if swift(>=4.0)
+                let darwinTestCount = SortedArrayTests.defaultTestSuite.testCaseCount
+            #else
+                let darwinTestCount = Int(SortedArrayTests.defaultTestSuite().testCaseCount)
+            #endif
             let linuxTestCount = SortedArrayTests.allTests.count
             XCTAssertEqual(linuxTestCount, darwinTestCount, "allTests (used for testing on Linux) is missing \(darwinTestCount - linuxTestCount) tests")
         #endif

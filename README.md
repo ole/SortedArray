@@ -1,18 +1,20 @@
 # SortedArray
 
-A sorted array type written in Swift 3.0.
+A sorted array type for Swift 3.1+ and 4.0+.
 
 Provides the `SortedArray` type, an array that keeps its elements sorted according to a given sort predicate.
 
 Written by Ole Begemann, February 2017.
 
-For more info, see my accompanying [blog article](https://oleb.net/blog/2017/02/sorted-array/).
+For more info, see the [GitHub repo](https://github.com/ole/SortedArray) and my accompanying [blog article](https://oleb.net/blog/2017/02/sorted-array/).
 
 ## Status
 
 [![Build Status](https://travis-ci.org/ole/SortedArray.svg?branch=master)](https://travis-ci.org/ole/SortedArray)
 
 ## Supported Platforms
+
+Supports Swift versions 3.1, 3.2, and 4.0. Not compatible with Swift 3.0. The last version compatible with Swift 3.0 is v0.4.
 
 Since the code has no dependencies other than the Swift standard library (it doesn't even use Foundation), it should work on all platforms where Swift is available.
 
