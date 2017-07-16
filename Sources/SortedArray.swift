@@ -82,6 +82,7 @@ extension SortedArray where Element: Comparable {
 
 extension SortedArray: RandomAccessCollection {
     public typealias Index = Int
+    public typealias Indices = CountableRange<Index>
 
     public var startIndex: Index { return _elements.startIndex }
     public var endIndex: Index { return _elements.endIndex }
