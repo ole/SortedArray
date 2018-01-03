@@ -1,3 +1,5 @@
+import Foundation // Needed for ComparisonResult (used privately)
+
 /// An array that keeps its elements sorted at all times.
 public struct SortedArray<Element> {
     /// The backing store
@@ -233,20 +235,30 @@ extension SortedArray {
 // MARK: - More efficient variants of default implementations or implementations that need fewer constraints than the default implementations.
 extension SortedArray {
     /// Returns the first index where the specified value appears in the collection.
+    /// After having found a matching index through binary search, the algorithm
+    /// iterates linearly through the array to find the first matching index.
     ///
-    /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
+    /// - Complexity: O(_log(n)_) in the general case, where _n_ is the size of the array.
+    ///   The worst-case performance could be O(_n_) if the array contains nothing
+    ///   but duplicates of the searched element.
     public func index(of element: Element) -> Index? {
-        switch search(for: element) {
-        case let .found(at: index): return index
-        case .notFound(insertAt: _): return nil
+        guard var match = anyIndex(of: element) else { return nil }
+        // Walk backward to find the first matching element (in case there are duplicates)
+        while let predecessor = index(match, offsetBy: -1, limitedBy: startIndex) {
+            if compare(lhs: self[predecessor], rhs: element) == .orderedSame {
+                match = predecessor
+            } else {
+                break
+            }
         }
+        return match
     }
 
     /// Returns a Boolean value indicating whether the sequence contains the given element.
     ///
     /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
     public func contains(_ element: Element) -> Bool {
-        return index(of: element) != nil
+        return anyIndex(of: element) != nil
     }
 
     /// Returns the minimum element in the sequence.
@@ -263,6 +275,36 @@ extension SortedArray {
     @warn_unqualified_access
     public func max() -> Element? {
         return last
+    }
+}
+
+// MARK: - APIs that go beyond what's in the stdlib
+extension SortedArray {
+    /// Returns an arbitrary index where the specified value appears in the collection.
+    /// Like `index(of:)`, but without the guarantee to return the *first* index
+    /// if the array contains duplicates of the searched element.
+    ///
+    /// Can be slightly faster than `index(of:)`.
+    public func anyIndex(of element: Element) -> Index? {
+        switch search(for: element) {
+        case let .found(at: index): return index
+        case .notFound(insertAt: _): return nil
+        }
+    }
+}
+
+// MARK: - Converting between a stdlib comparator function and Foundation.ComparisonResult
+extension SortedArray {
+    fileprivate func compare(lhs: Element, rhs: Element) -> Foundation.ComparisonResult {
+        if areInIncreasingOrder(lhs, rhs) {
+            return .orderedAscending
+        } else if areInIncreasingOrder(rhs, lhs) {
+            return .orderedDescending
+        } else {
+            // If neither element comes before the other, they _must_ be
+            // equal, per the strict ordering requirement of `areInIncreasingOrder`.
+            return .orderedSame
+        }
     }
 }
 
@@ -304,13 +346,12 @@ extension SortedArray {
             let mid = index(left, offsetBy: dist/2)
             let candidate = self[mid]
 
-            if areInIncreasingOrder(candidate, newElement) {
+            switch compare(lhs: candidate, rhs: newElement) {
+            case .orderedAscending:
                 left = index(after: mid)
-            } else if areInIncreasingOrder(newElement, candidate) {
+            case .orderedDescending:
                 right = index(before: mid)
-            } else {
-                // If neither element comes before the other, they _must_ be
-                // equal, per the strict ordering requirement of `areInIncreasingOrder`.
+            case .orderedSame:
                 return .found(at: mid)
             }
         }

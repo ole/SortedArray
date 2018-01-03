@@ -130,10 +130,22 @@ class SortedArrayTests: XCTestCase {
         XCTAssertNil(index)
     }
 
-    func testIndexOfReturnsFirstMatchForDuplicates() {
-        let sut = SortedArray(unsorted: "abcabcabc".characters)
-        let index = sut.index(of: "c")
-        XCTAssertEqual(index, 6)
+    func testIndexOfFindsFirstIndexOfDuplicateElements1() {
+        let sut = SortedArray(unsorted: [1,2,3,3,3,3,3,3,3,3,4,5])
+        let index = sut.index(of: 3)
+        XCTAssertEqual(index, 2)
+    }
+
+    func testIndexOfFindsFirstIndexOfDuplicateElements2() {
+        let sut = SortedArray(unsorted: [1,4,4,4,4,4,4,4,4,3,2])
+        let index = sut.index(of: 4)
+        XCTAssertEqual(index, 3)
+    }
+
+    func testIndexOfFindsFirstIndexOfDuplicateElements3() {
+        let sut = SortedArray(unsorted: String(repeating: "A", count: 10).characters)
+        let index = sut.index(of: "A")
+        XCTAssertEqual(index, 0)
     }
 
     func testsContains() {
@@ -264,7 +276,9 @@ extension SortedArrayTests {
             ("testIndexOfFindsFirstElement", testIndexOfFindsFirstElement),
             ("testIndexOfFindsLastElement", testIndexOfFindsLastElement),
             ("testIndexOfReturnsNilWhenNotFound", testIndexOfReturnsNilWhenNotFound),
-            ("testIndexOfReturnsFirstMatchForDuplicates", testIndexOfReturnsFirstMatchForDuplicates),
+            ("testIndexOfFindsFirstIndexOfDuplicateElements1", testIndexOfFindsFirstIndexOfDuplicateElements1),
+            ("testIndexOfFindsFirstIndexOfDuplicateElements2", testIndexOfFindsFirstIndexOfDuplicateElements2),
+            ("testIndexOfFindsFirstIndexOfDuplicateElements3", testIndexOfFindsFirstIndexOfDuplicateElements3),
             ("testsContains", testsContains),
             ("testMin", testMin),
             ("testMax", testMax),
