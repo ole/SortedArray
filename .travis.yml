@@ -8,7 +8,7 @@ matrix:
     - os: osx
       language: generic
       # Xcode version implicitly defines the Swift version to be used on macOS.
-      osx_image: xcode9
+      osx_image: xcode9.2
 
     - os: linux
       language: generic
@@ -28,6 +28,14 @@ matrix:
         # You can use tags to select a specific Swift version if the
         # image supports it, e.g. "swift:3.0.2" or "swift:latest".
         DOCKER_IMAGE="swift:3.1"
+
+    - os: linux
+      language: generic
+      sudo: required
+      services:
+        - docker
+      env:
+        DOCKER_IMAGE="swift:4.0"
 
 script:
   - chmod ugo+x ./scripts/travis-build-script.sh

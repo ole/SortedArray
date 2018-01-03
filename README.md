@@ -8,11 +8,9 @@ Written by Ole Begemann, February 2017.
 
 For more info, see the [GitHub repo](https://github.com/ole/SortedArray) and my accompanying [blog article](https://oleb.net/blog/2017/02/sorted-array/).
 
-<!-- ## Status
+## Status
 
-(Travis CI build status removed for the time being because Travis is so flaky. The build keeps failing even when it works.)
-
-[![Build Status](https://travis-ci.org/ole/SortedArray.svg?branch=master)](https://travis-ci.org/ole/SortedArray) -->
+[![Build Status](https://travis-ci.org/ole/SortedArray.svg?branch=master)](https://travis-ci.org/ole/SortedArray)
 
 ## Supported Platforms
 
