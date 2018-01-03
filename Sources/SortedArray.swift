@@ -291,6 +291,27 @@ extension SortedArray {
         case .notFound(insertAt: _): return nil
         }
     }
+
+    /// Returns the last index where the specified value appears in the collection.
+    /// After having found a matching index through binary search, the algorithm
+    /// iterates linearly through the array to find the last matching index.
+    ///
+    /// - Complexity: O(_log(n)_) in the general case, where _n_ is the size of the array.
+    ///   The worst-case performance could be O(_n_) if the array contains nothing
+    ///   but duplicates of the searched element.
+    public func lastIndex(of element: Element) -> Index? {
+        guard var match = anyIndex(of: element) else { return nil }
+        // Walk forward to find the last matching element (in case there are duplicates)
+        let lastValidIndex = index(before: endIndex)
+        while let successor = index(match, offsetBy: 1, limitedBy: lastValidIndex) {
+            if compare(lhs: self[successor], rhs: element) == .orderedSame {
+                match = successor
+            } else {
+                break
+            }
+        }
+        return match
+    }
 }
 
 // MARK: - Converting between a stdlib comparator function and Foundation.ComparisonResult

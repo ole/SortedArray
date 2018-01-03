@@ -148,6 +148,48 @@ class SortedArrayTests: XCTestCase {
         XCTAssertEqual(index, 0)
     }
 
+    func testLastIndexOfFindsElementInMiddle() {
+        let sut = SortedArray(unsorted: ["a","z","r","k"])
+        let index = sut.lastIndex(of: "k")
+        XCTAssertEqual(index, 1)
+    }
+
+    func testLastIndexOfFindsFirstElement() {
+        let sut = SortedArray(sorted: 1..<10)
+        let index = sut.lastIndex(of: 1)
+        XCTAssertEqual(index, 0)
+    }
+
+    func testLastIndexOfFindsLastElement() {
+        let sut = SortedArray(sorted: 1..<10)
+        let index = sut.lastIndex(of: 9)
+        XCTAssertEqual(index, 8)
+    }
+
+    func testLastIndexOfReturnsNilWhenNotFound() {
+        let sut = SortedArray(unsorted: "Hello World".characters)
+        let index = sut.lastIndex(of: "h")
+        XCTAssertNil(index)
+    }
+
+    func testLastIndexOfFindsLastIndexOfDuplicateElements1() {
+        let sut = SortedArray(unsorted: [1,2,3,3,3,3,3,3,3,3,4,5])
+        let index = sut.lastIndex(of: 3)
+        XCTAssertEqual(index, 9)
+    }
+
+    func testLastIndexOfFindsLastIndexOfDuplicateElements2() {
+        let sut = SortedArray(unsorted: [1,4,4,4,4,4,4,4,4,3,2])
+        let index = sut.lastIndex(of: 4)
+        XCTAssertEqual(index, 10)
+    }
+
+    func testLastIndexOfFindsLastIndexOfDuplicateElements3() {
+        let sut = SortedArray(unsorted: String(repeating: "A", count: 10).characters)
+        let index = sut.lastIndex(of: "A")
+        XCTAssertEqual(index, 9)
+    }
+
     func testsContains() {
         let sut = SortedArray(unsorted: "Lorem ipsum".characters)
         XCTAssertTrue(sut.contains(" "))
@@ -279,6 +321,13 @@ extension SortedArrayTests {
             ("testIndexOfFindsFirstIndexOfDuplicateElements1", testIndexOfFindsFirstIndexOfDuplicateElements1),
             ("testIndexOfFindsFirstIndexOfDuplicateElements2", testIndexOfFindsFirstIndexOfDuplicateElements2),
             ("testIndexOfFindsFirstIndexOfDuplicateElements3", testIndexOfFindsFirstIndexOfDuplicateElements3),
+            ("testLastIndexOfFindsElementInMiddle", testLastIndexOfFindsElementInMiddle),
+            ("testLastIndexOfFindsFirstElement", testLastIndexOfFindsFirstElement),
+            ("testLastIndexOfFindsLastElement", testLastIndexOfFindsLastElement),
+            ("testLastIndexOfReturnsNilWhenNotFound", testLastIndexOfReturnsNilWhenNotFound),
+            ("testLastIndexOfFindsLastIndexOfDuplicateElements1", testLastIndexOfFindsLastIndexOfDuplicateElements1),
+            ("testLastIndexOfFindsLastIndexOfDuplicateElements2", testLastIndexOfFindsLastIndexOfDuplicateElements2),
+            ("testLastIndexOfFindsLastIndexOfDuplicateElements3", testLastIndexOfFindsLastIndexOfDuplicateElements3),
             ("testsContains", testsContains),
             ("testMin", testMin),
             ("testMax", testMax),
