@@ -212,14 +212,16 @@ extension SortedArray {
 
     /// Removes all elements from the array.
     ///
-    /// - Parameter keepCapacity: Pass `true` to keep the existing capacity of the array after removing its elements. The default value is `false`.
+    /// - Parameter keepCapacity: Pass `true` to keep the existing capacity of
+    ///   the array after removing its elements. The default value is `false`.
     ///
     /// - Complexity: O(_n_), where _n_ is the length of the array.
     public mutating func removeAll(keepingCapacity keepCapacity: Bool = true) {
         _elements.removeAll(keepingCapacity: keepCapacity)
     }
 
-    /// Removes an element from the array. If the array contains multiple instances of `element`, this method only removes the first one.
+    /// Removes an element from the array. If the array contains multiple
+    /// instances of `element`, this method only removes the first one.
     ///
     /// - Complexity: O(_n_), where _n_ is the size of the array.
     public mutating func remove(_ element: Element) {
