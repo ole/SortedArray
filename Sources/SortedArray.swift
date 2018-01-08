@@ -235,19 +235,24 @@ extension SortedArray {
 // MARK: - More efficient variants of default implementations or implementations that need fewer constraints than the default implementations.
 extension SortedArray {
     /// Returns the first index where the specified value appears in the collection.
-    /// After having found a matching index through binary search, the algorithm
-    /// iterates linearly through the array to find the first matching index.
     ///
-    /// - Complexity: O(_log(n)_) in the general case, where _n_ is the size of the array.
-    ///   The worst-case performance could be O(_n_) if the array contains nothing
-    ///   but duplicates of the searched element.
+    /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
     public func index(of element: Element) -> Index? {
-        guard var match = anyIndex(of: element) else { return nil }
-        // Walk backward to find the first matching element (in case there are duplicates)
-        while let predecessor = index(match, offsetBy: -1, limitedBy: startIndex) {
-            if compare(self[predecessor], element) == .orderedSame {
+        var range: Range<Index> = startIndex ..< endIndex
+        var match: Index? = nil
+        while case let .found(m) = search(for: element, in: range) {
+            // We found a matching element
+            // Check if its predecessor also matches
+            if let predecessor = index(m, offsetBy: -1, limitedBy: range.lowerBound),
+                compare(self[predecessor], element) == .orderedSame
+            {
+                // Predecessor matches => continue searching using binary search
                 match = predecessor
-            } else {
+                range = range.lowerBound ..< predecessor
+            }
+            else {
+                // We're done
+                match = m
                 break
             }
         }
@@ -293,20 +298,28 @@ extension SortedArray {
     }
 
     /// Returns the last index where the specified value appears in the collection.
-    /// After having found a matching index through binary search, the algorithm
-    /// iterates linearly through the array to find the last matching index.
     ///
-    /// - Complexity: O(_log(n)_) in the general case, where _n_ is the size of the array.
-    ///   The worst-case performance could be O(_n_) if the array contains nothing
-    ///   but duplicates of the searched element.
+    /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
     public func lastIndex(of element: Element) -> Index? {
-        guard var match = anyIndex(of: element) else { return nil }
-        // Walk forward to find the last matching element (in case there are duplicates)
-        let lastValidIndex = index(before: endIndex)
-        while let successor = index(match, offsetBy: 1, limitedBy: lastValidIndex) {
-            if compare(self[successor], element) == .orderedSame {
+        var range: Range<Index> = startIndex ..< endIndex
+        var match: Index? = nil
+        while case let .found(m) = search(for: element, in: range) {
+            // We found a matching element
+            // Check if its successor also matches
+            let lastValidIndex = index(before: range.upperBound)
+            if let successor = index(m, offsetBy: 1, limitedBy: lastValidIndex),
+                compare(self[successor], element) == .orderedSame
+            {
+                // Successor matches => continue searching using binary search
                 match = successor
-            } else {
+                guard let afterSuccessor = index(successor, offsetBy: 1, limitedBy: lastValidIndex) else {
+                    break
+                }
+                range =  afterSuccessor ..< range.upperBound
+            }
+            else {
+                // We're done
+                match = m
                 break
             }
         }
@@ -358,9 +371,13 @@ extension SortedArray {
     ///
     /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
     fileprivate func search(for element: Element) -> Match<Index> {
-        guard !isEmpty else { return .notFound(insertAt: endIndex) }
-        var left = startIndex
-        var right = index(before: endIndex)
+        return search(for: element, in: startIndex ..< endIndex)
+    }
+
+    fileprivate func search(for element: Element, in range: Range<Index>) -> Match<Index> {
+        guard !range.isEmpty else { return .notFound(insertAt: range.upperBound) }
+        var left = range.lowerBound
+        var right = index(before: range.upperBound)
 
         while left <= right {
             let dist = distance(from: left, to: right)
