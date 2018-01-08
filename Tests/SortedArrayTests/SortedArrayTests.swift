@@ -130,6 +130,18 @@ class SortedArrayTests: XCTestCase {
         XCTAssertNil(index)
     }
 
+    func testIndexOfReturnsNilForEmptyArray() {
+        let sut = SortedArray<Int>()
+        let index = sut.index(of: 1)
+        XCTAssertNil(index)
+    }
+
+    func testIndexOfCanDealWithSingleElementArray() {
+        let sut = SortedArray<Int>(unsorted: [5])
+        let index = sut.index(of: 5)
+        XCTAssertEqual(index, 0)
+    }
+
     func testIndexOfFindsFirstIndexOfDuplicateElements1() {
         let sut = SortedArray(unsorted: [1,2,3,3,3,3,3,3,3,3,4,5])
         let index = sut.index(of: 3)
@@ -183,6 +195,18 @@ class SortedArrayTests: XCTestCase {
         let sut = SortedArray(unsorted: "Hello World".characters)
         let index = sut.lastIndex(of: "h")
         XCTAssertNil(index)
+    }
+
+    func testLastIndexOfReturnsNilForEmptyArray() {
+        let sut = SortedArray<Int>()
+        let index = sut.lastIndex(of: 1)
+        XCTAssertNil(index)
+    }
+
+    func testLastIndexOfCanDealWithSingleElementArray() {
+        let sut = SortedArray<Int>(unsorted: [5])
+        let index = sut.lastIndex(of: 5)
+        XCTAssertEqual(index, 0)
     }
 
     func testLastIndexOfFindsLastIndexOfDuplicateElements1() {
@@ -331,6 +355,8 @@ extension SortedArrayTests {
             ("testIndexOfFindsFirstElement", testIndexOfFindsFirstElement),
             ("testIndexOfFindsLastElement", testIndexOfFindsLastElement),
             ("testIndexOfReturnsNilWhenNotFound", testIndexOfReturnsNilWhenNotFound),
+            ("testIndexOfReturnsNilForEmptyArray", testIndexOfReturnsNilForEmptyArray),
+            ("testIndexOfCanDealWithSingleElementArray", testIndexOfCanDealWithSingleElementArray),
             ("testIndexOfFindsFirstIndexOfDuplicateElements1", testIndexOfFindsFirstIndexOfDuplicateElements1),
             ("testIndexOfFindsFirstIndexOfDuplicateElements2", testIndexOfFindsFirstIndexOfDuplicateElements2),
             ("testIndexOfFindsFirstIndexOfDuplicateElements3", testIndexOfFindsFirstIndexOfDuplicateElements3),
@@ -340,6 +366,8 @@ extension SortedArrayTests {
             ("testLastIndexOfFindsFirstElement", testLastIndexOfFindsFirstElement),
             ("testLastIndexOfFindsLastElement", testLastIndexOfFindsLastElement),
             ("testLastIndexOfReturnsNilWhenNotFound", testLastIndexOfReturnsNilWhenNotFound),
+            ("testLastIndexOfReturnsNilForEmptyArray", testLastIndexOfReturnsNilForEmptyArray),
+            ("testLastIndexOfCanDealWithSingleElementArray", testLastIndexOfCanDealWithSingleElementArray),
             ("testLastIndexOfFindsLastIndexOfDuplicateElements1", testLastIndexOfFindsLastIndexOfDuplicateElements1),
             ("testLastIndexOfFindsLastIndexOfDuplicateElements2", testLastIndexOfFindsLastIndexOfDuplicateElements2),
             ("testLastIndexOfFindsLastIndexOfDuplicateElements3", testLastIndexOfFindsLastIndexOfDuplicateElements3),
