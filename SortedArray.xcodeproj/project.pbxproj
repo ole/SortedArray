@@ -14,7 +14,6 @@
 		52D6DA091BF00081002C0205 /* SortedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* SortedArray.swift */; };
 		52D6DA261BF00118002C0205 /* SortedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* SortedArray.swift */; };
 		5D66342A2004011100364E93 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D6634292004011100364E93 /* SwiftCheck.framework */; };
-		5D6634E42004022300364E93 /* SwiftCheck.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5D6634E32004022300364E93 /* SwiftCheck.framework.dSYM */; };
 		5D6634E6200403BD00364E93 /* PropertyBasedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6634E5200403BD00364E93 /* PropertyBasedTests.swift */; };
 		5DA058D21E8813F3006FA2B1 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */; };
 		5DA058D31E8813F3006FA2B1 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */; };
@@ -49,19 +48,6 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		5D66342B2004014A00364E93 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 16;
-			files = (
-				5D6634E42004022300364E93 /* SwiftCheck.framework.dSYM in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		52D6D97C1BEFF229002C0205 /* SortedArray.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SortedArray.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9861BEFF229002C0205 /* SortedArray-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SortedArray-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,7 +58,6 @@
 		52D6DA0F1BF000BD002C0205 /* SortedArray.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SortedArray.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D6634292004011100364E93 /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/Mac/SwiftCheck.framework; sourceTree = "<group>"; };
 		5D6634E22004020600364E93 /* Carthage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Carthage; sourceTree = SOURCE_ROOT; };
-		5D6634E32004022300364E93 /* SwiftCheck.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = SwiftCheck.framework.dSYM; path = Carthage/Build/Mac/SwiftCheck.framework.dSYM; sourceTree = "<group>"; };
 		5D6634E5200403BD00364E93 /* PropertyBasedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PropertyBasedTests.swift; path = Tests/SortedArrayTests/PropertyBasedTests.swift; sourceTree = "<group>"; };
 		5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestHelpers.swift; path = Tests/SortedArrayTests/TestHelpers.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* SortedArray.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SortedArray.plist; sourceTree = "<group>"; };
@@ -179,7 +164,6 @@
 			isa = PBXGroup;
 			children = (
 				5D6634292004011100364E93 /* SwiftCheck.framework */,
-				5D6634E32004022300364E93 /* SwiftCheck.framework.dSYM */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -331,7 +315,6 @@
 				DD7502761C68FCFC006590AF /* Sources */,
 				DD7502771C68FCFC006590AF /* Frameworks */,
 				DD7502781C68FCFC006590AF /* Resources */,
-				5D66342B2004014A00364E93 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -877,7 +860,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = Configs/SortedArrayTests.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(PROJECT_DIR)/Carthage/Build/Mac";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.SortedArray.SortedArray-macOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -896,7 +879,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = Configs/SortedArrayTests.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(PROJECT_DIR)/Carthage/Build/Mac";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.SortedArray.SortedArray-macOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
