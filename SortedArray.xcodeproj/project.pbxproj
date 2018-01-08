@@ -15,9 +15,13 @@
 		52D6DA261BF00118002C0205 /* SortedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* SortedArray.swift */; };
 		5D66342A2004011100364E93 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D6634292004011100364E93 /* SwiftCheck.framework */; };
 		5D6634E6200403BD00364E93 /* PropertyBasedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6634E5200403BD00364E93 /* PropertyBasedTests.swift */; };
+		5D6634E720040E7C00364E93 /* PropertyBasedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6634E5200403BD00364E93 /* PropertyBasedTests.swift */; };
+		5D6634E820040E7D00364E93 /* PropertyBasedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6634E5200403BD00364E93 /* PropertyBasedTests.swift */; };
+		5D6634EA20040EA000364E93 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D6634E920040EA000364E93 /* SwiftCheck.framework */; };
 		5DA058D21E8813F3006FA2B1 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */; };
 		5DA058D31E8813F3006FA2B1 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */; };
 		5DA058D41E8813F3006FA2B1 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */; };
+		5DCEA30520042EE500A94D3F /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCEA30420042EE500A94D3F /* SwiftCheck.framework */; };
 		DD7502861C68FDDC006590AF /* SortedArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* SortedArrayTests.swift */; };
 		DD7502881C68FEDE006590AF /* SortedArray.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6DA0F1BF000BD002C0205 /* SortedArray.framework */; };
 		DD7502921C690C7A006590AF /* SortedArray.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D9F01BEFFFBE002C0205 /* SortedArray.framework */; };
@@ -59,7 +63,9 @@
 		5D6634292004011100364E93 /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/Mac/SwiftCheck.framework; sourceTree = "<group>"; };
 		5D6634E22004020600364E93 /* Carthage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Carthage; sourceTree = SOURCE_ROOT; };
 		5D6634E5200403BD00364E93 /* PropertyBasedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PropertyBasedTests.swift; path = Tests/SortedArrayTests/PropertyBasedTests.swift; sourceTree = "<group>"; };
+		5D6634E920040EA000364E93 /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/iOS/SwiftCheck.framework; sourceTree = "<group>"; };
 		5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestHelpers.swift; path = Tests/SortedArrayTests/TestHelpers.swift; sourceTree = "<group>"; };
+		5DCEA30420042EE500A94D3F /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/tvOS/SwiftCheck.framework; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* SortedArray.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SortedArray.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* SortedArrayTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SortedArrayTests.plist; sourceTree = "<group>"; };
 		DD75027A1C68FCFC006590AF /* SortedArray-macOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SortedArray-macOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,6 +85,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52D6D9871BEFF229002C0205 /* SortedArray.framework in Frameworks */,
+				5D6634EA20040EA000364E93 /* SwiftCheck.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +124,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD7502921C690C7A006590AF /* SortedArray.framework in Frameworks */,
+				5DCEA30520042EE500A94D3F /* SwiftCheck.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +171,9 @@
 		5D6634282004011100364E93 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5DCEA30420042EE500A94D3F /* SwiftCheck.framework */,
 				5D6634292004011100364E93 /* SwiftCheck.framework */,
+				5D6634E920040EA000364E93 /* SwiftCheck.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -473,6 +483,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52D6D99B1BEFF375002C0205 /* SortedArrayTests.swift in Sources */,
+				5D6634E720040E7C00364E93 /* PropertyBasedTests.swift in Sources */,
 				5DA058D21E8813F3006FA2B1 /* TestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -516,6 +527,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD75029A1C690CBE006590AF /* SortedArrayTests.swift in Sources */,
+				5D6634E820040E7D00364E93 /* PropertyBasedTests.swift in Sources */,
 				5DA058D41E8813F3006FA2B1 /* TestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -696,8 +708,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Configs/SortedArrayTests.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build/iOS";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.SortedArray.SortedArray-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -708,8 +724,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Configs/SortedArrayTests.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build/iOS";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.SortedArray.SortedArray-iOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -891,8 +911,12 @@
 		DD7502961C690C7A006590AF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				INFOPLIST_FILE = Configs/SortedArrayTests.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build/tvOS";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.SortedArray.SortedArray-tvOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -904,8 +928,12 @@
 		DD7502971C690C7A006590AF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				INFOPLIST_FILE = Configs/SortedArrayTests.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(PROJECT_DIR)/Carthage/Build/tvOS";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.SortedArray.SortedArray-tvOS-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
