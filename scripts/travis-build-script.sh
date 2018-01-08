@@ -15,7 +15,7 @@ if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
     swift --version
     swift package clean
     swift build
-    swift test --parallel
+    swift test
 
     # 2. Test using xcodebuild
     echo -e "\nBuilding with xcodebuild\n========================"
