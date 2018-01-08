@@ -245,7 +245,7 @@ extension SortedArray {
         guard var match = anyIndex(of: element) else { return nil }
         // Walk backward to find the first matching element (in case there are duplicates)
         while let predecessor = index(match, offsetBy: -1, limitedBy: startIndex) {
-            if compare(lhs: self[predecessor], rhs: element) == .orderedSame {
+            if compare(self[predecessor], element) == .orderedSame {
                 match = predecessor
             } else {
                 break
@@ -304,7 +304,7 @@ extension SortedArray {
         // Walk forward to find the last matching element (in case there are duplicates)
         let lastValidIndex = index(before: endIndex)
         while let successor = index(match, offsetBy: 1, limitedBy: lastValidIndex) {
-            if compare(lhs: self[successor], rhs: element) == .orderedSame {
+            if compare(self[successor], element) == .orderedSame {
                 match = successor
             } else {
                 break
@@ -316,7 +316,7 @@ extension SortedArray {
 
 // MARK: - Converting between a stdlib comparator function and Foundation.ComparisonResult
 extension SortedArray {
-    fileprivate func compare(lhs: Element, rhs: Element) -> Foundation.ComparisonResult {
+    fileprivate func compare(_ lhs: Element, _ rhs: Element) -> Foundation.ComparisonResult {
         if areInIncreasingOrder(lhs, rhs) {
             return .orderedAscending
         } else if areInIncreasingOrder(rhs, lhs) {
@@ -346,18 +346,18 @@ fileprivate enum Match<Index: Comparable> {
 }
 
 extension SortedArray {
-    /// Searches the array for `newElement` using binary search.
+    /// Searches the array for `element` using binary search.
     ///
-    /// - Returns: If `newElement` is in the array, returns `.found(at: index)`
+    /// - Returns: If `element` is in the array, returns `.found(at: index)`
     ///   where `index` is the index of the element in the array.
-    ///   If `newElement` is not in the array, returns `.notFound(insertAt: index)`
+    ///   If `element` is not in the array, returns `.notFound(insertAt: index)`
     ///   where `index` is the index where the element should be inserted to 
     ///   preserve the sort order.
-    ///   If the array contains multiple elements that are equal to `newElement`,
+    ///   If the array contains multiple elements that are equal to `element`,
     ///   there is no guarantee which of these is found.
     ///
     /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
-    fileprivate func search(for newElement: Element) -> Match<Index> {
+    fileprivate func search(for element: Element) -> Match<Index> {
         guard !isEmpty else { return .notFound(insertAt: endIndex) }
         var left = startIndex
         var right = index(before: endIndex)
@@ -367,7 +367,7 @@ extension SortedArray {
             let mid = index(left, offsetBy: dist/2)
             let candidate = self[mid]
 
-            switch compare(lhs: candidate, rhs: newElement) {
+            switch compare(candidate, element) {
             case .orderedAscending:
                 left = index(after: mid)
             case .orderedDescending:
