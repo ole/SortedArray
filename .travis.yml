@@ -4,11 +4,14 @@ matrix:
       language: generic
       # Xcode version implicitly defines the Swift version to be used on macOS.
       osx_image: xcode8.3
-
+      before_script:
+        - carthage bootstrap
     - os: osx
       language: generic
       # Xcode version implicitly defines the Swift version to be used on macOS.
       osx_image: xcode9.2
+      before_script:
+        - carthage bootstrap
 
     - os: linux
       language: generic
