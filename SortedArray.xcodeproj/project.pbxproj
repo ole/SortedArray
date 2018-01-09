@@ -13,6 +13,9 @@
 		52D6D9EA1BEFFFA4002C0205 /* SortedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* SortedArray.swift */; };
 		52D6DA091BF00081002C0205 /* SortedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* SortedArray.swift */; };
 		52D6DA261BF00118002C0205 /* SortedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* SortedArray.swift */; };
+		5D6634252003E2C000364E93 /* PerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6634242003E2C000364E93 /* PerformanceTests.swift */; };
+		5D6634262003E2C000364E93 /* PerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6634242003E2C000364E93 /* PerformanceTests.swift */; };
+		5D6634272003E2C000364E93 /* PerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6634242003E2C000364E93 /* PerformanceTests.swift */; };
 		5DA058D21E8813F3006FA2B1 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */; };
 		5DA058D31E8813F3006FA2B1 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */; };
 		5DA058D41E8813F3006FA2B1 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */; };
@@ -54,6 +57,7 @@
 		52D6D9E21BEFFF6E002C0205 /* SortedArray.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SortedArray.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9F01BEFFFBE002C0205 /* SortedArray.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SortedArray.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6DA0F1BF000BD002C0205 /* SortedArray.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SortedArray.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D6634242003E2C000364E93 /* PerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PerformanceTests.swift; path = Tests/SortedArrayTests/PerformanceTests.swift; sourceTree = "<group>"; };
 		5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestHelpers.swift; path = Tests/SortedArrayTests/TestHelpers.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* SortedArray.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SortedArray.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* SortedArrayTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SortedArrayTests.plist; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 			children = (
 				52D6D9961BEFF375002C0205 /* SortedArray.swift */,
 				52D6D9971BEFF375002C0205 /* SortedArrayTests.swift */,
+				5D6634242003E2C000364E93 /* PerformanceTests.swift */,
 				5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */,
 				52D6D99C1BEFF38C002C0205 /* Configs */,
 				52D6D97D1BEFF229002C0205 /* Products */,
@@ -456,6 +461,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52D6D99B1BEFF375002C0205 /* SortedArrayTests.swift in Sources */,
+				5D6634252003E2C000364E93 /* PerformanceTests.swift in Sources */,
 				5DA058D21E8813F3006FA2B1 /* TestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -489,6 +495,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD7502861C68FDDC006590AF /* SortedArrayTests.swift in Sources */,
+				5D6634262003E2C000364E93 /* PerformanceTests.swift in Sources */,
 				5DA058D31E8813F3006FA2B1 /* TestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -498,6 +505,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD75029A1C690CBE006590AF /* SortedArrayTests.swift in Sources */,
+				5D6634272003E2C000364E93 /* PerformanceTests.swift in Sources */,
 				5DA058D41E8813F3006FA2B1 /* TestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
