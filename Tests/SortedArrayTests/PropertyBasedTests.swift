@@ -38,6 +38,18 @@ class PropertyBasedTests: XCTestCase {
             let sut = SortedArray(unsorted: xs.getArray)
             return xs.getArray.sorted().index(of: x) == sut.index(of: x)
         }
+        property("lastIndex(of:) finds last index") <- forAll { (x: Int, xs: ArrayOf<Int>) in
+            let sut = SortedArray(unsorted: xs.getArray)
+            // Array doesn't have a lastIndex(of:) method -> replicate it
+            let array = xs.getArray.sorted()
+            let lastIndex: Array<Int>.Index?
+            if let idx = array.reversed().index(of: x)?.base {
+                lastIndex = array.index(before: idx)
+            } else {
+                lastIndex = nil
+            }
+            return lastIndex == sut.lastIndex(of: x)
+        }
     }
 }
 
