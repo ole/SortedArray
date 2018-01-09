@@ -1,3 +1,5 @@
+import Foundation // Needed for ComparisonResult (used privately)
+
 /// An array that keeps its elements sorted at all times.
 public struct SortedArray<Element> {
     /// The backing store
@@ -236,17 +238,32 @@ extension SortedArray {
     ///
     /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
     public func index(of element: Element) -> Index? {
-        switch search(for: element) {
-        case let .found(at: index): return index
-        case .notFound(insertAt: _): return nil
+        var range: Range<Index> = startIndex ..< endIndex
+        var match: Index? = nil
+        while case let .found(m) = search(for: element, in: range) {
+            // We found a matching element
+            // Check if its predecessor also matches
+            if let predecessor = index(m, offsetBy: -1, limitedBy: range.lowerBound),
+                compare(self[predecessor], element) == .orderedSame
+            {
+                // Predecessor matches => continue searching using binary search
+                match = predecessor
+                range = range.lowerBound ..< predecessor
+            }
+            else {
+                // We're done
+                match = m
+                break
+            }
         }
+        return match
     }
 
     /// Returns a Boolean value indicating whether the sequence contains the given element.
     ///
     /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
     public func contains(_ element: Element) -> Bool {
-        return index(of: element) != nil
+        return anyIndex(of: element) != nil
     }
 
     /// Returns the minimum element in the sequence.
@@ -263,6 +280,65 @@ extension SortedArray {
     @warn_unqualified_access
     public func max() -> Element? {
         return last
+    }
+}
+
+// MARK: - APIs that go beyond what's in the stdlib
+extension SortedArray {
+    /// Returns an arbitrary index where the specified value appears in the collection.
+    /// Like `index(of:)`, but without the guarantee to return the *first* index
+    /// if the array contains duplicates of the searched element.
+    ///
+    /// Can be slightly faster than `index(of:)`.
+    public func anyIndex(of element: Element) -> Index? {
+        switch search(for: element) {
+        case let .found(at: index): return index
+        case .notFound(insertAt: _): return nil
+        }
+    }
+
+    /// Returns the last index where the specified value appears in the collection.
+    ///
+    /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
+    public func lastIndex(of element: Element) -> Index? {
+        var range: Range<Index> = startIndex ..< endIndex
+        var match: Index? = nil
+        while case let .found(m) = search(for: element, in: range) {
+            // We found a matching element
+            // Check if its successor also matches
+            let lastValidIndex = index(before: range.upperBound)
+            if let successor = index(m, offsetBy: 1, limitedBy: lastValidIndex),
+                compare(self[successor], element) == .orderedSame
+            {
+                // Successor matches => continue searching using binary search
+                match = successor
+                guard let afterSuccessor = index(successor, offsetBy: 1, limitedBy: lastValidIndex) else {
+                    break
+                }
+                range =  afterSuccessor ..< range.upperBound
+            }
+            else {
+                // We're done
+                match = m
+                break
+            }
+        }
+        return match
+    }
+}
+
+// MARK: - Converting between a stdlib comparator function and Foundation.ComparisonResult
+extension SortedArray {
+    fileprivate func compare(_ lhs: Element, _ rhs: Element) -> Foundation.ComparisonResult {
+        if areInIncreasingOrder(lhs, rhs) {
+            return .orderedAscending
+        } else if areInIncreasingOrder(rhs, lhs) {
+            return .orderedDescending
+        } else {
+            // If neither element comes before the other, they _must_ be
+            // equal, per the strict ordering requirement of `areInIncreasingOrder`.
+            return .orderedSame
+        }
     }
 }
 
@@ -283,34 +359,37 @@ fileprivate enum Match<Index: Comparable> {
 }
 
 extension SortedArray {
-    /// Searches the array for `newElement` using binary search.
+    /// Searches the array for `element` using binary search.
     ///
-    /// - Returns: If `newElement` is in the array, returns `.found(at: index)`
+    /// - Returns: If `element` is in the array, returns `.found(at: index)`
     ///   where `index` is the index of the element in the array.
-    ///   If `newElement` is not in the array, returns `.notFound(insertAt: index)`
+    ///   If `element` is not in the array, returns `.notFound(insertAt: index)`
     ///   where `index` is the index where the element should be inserted to 
     ///   preserve the sort order.
-    ///   If the array contains multiple elements that are equal to `newElement`,
+    ///   If the array contains multiple elements that are equal to `element`,
     ///   there is no guarantee which of these is found.
     ///
     /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
-    fileprivate func search(for newElement: Element) -> Match<Index> {
-        guard !isEmpty else { return .notFound(insertAt: endIndex) }
-        var left = startIndex
-        var right = index(before: endIndex)
+    fileprivate func search(for element: Element) -> Match<Index> {
+        return search(for: element, in: startIndex ..< endIndex)
+    }
+
+    fileprivate func search(for element: Element, in range: Range<Index>) -> Match<Index> {
+        guard !range.isEmpty else { return .notFound(insertAt: range.upperBound) }
+        var left = range.lowerBound
+        var right = index(before: range.upperBound)
 
         while left <= right {
             let dist = distance(from: left, to: right)
             let mid = index(left, offsetBy: dist/2)
             let candidate = self[mid]
 
-            if areInIncreasingOrder(candidate, newElement) {
+            switch compare(candidate, element) {
+            case .orderedAscending:
                 left = index(after: mid)
-            } else if areInIncreasingOrder(newElement, candidate) {
+            case .orderedDescending:
                 right = index(before: mid)
-            } else {
-                // If neither element comes before the other, they _must_ be
-                // equal, per the strict ordering requirement of `areInIncreasingOrder`.
+            case .orderedSame:
                 return .found(at: mid)
             }
         }

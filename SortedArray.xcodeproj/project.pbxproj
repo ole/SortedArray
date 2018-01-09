@@ -14,6 +14,9 @@
 		52D6DA091BF00081002C0205 /* SortedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* SortedArray.swift */; };
 		52D6DA261BF00118002C0205 /* SortedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* SortedArray.swift */; };
 		5D66342A2004011100364E93 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D6634292004011100364E93 /* SwiftCheck.framework */; };
+		5D6634252003E2C000364E93 /* PerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6634242003E2C000364E93 /* PerformanceTests.swift */; };
+		5D6634262003E2C000364E93 /* PerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6634242003E2C000364E93 /* PerformanceTests.swift */; };
+		5D6634272003E2C000364E93 /* PerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6634242003E2C000364E93 /* PerformanceTests.swift */; };
 		5D6634E6200403BD00364E93 /* PropertyBasedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6634E5200403BD00364E93 /* PropertyBasedTests.swift */; };
 		5D6634E720040E7C00364E93 /* PropertyBasedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6634E5200403BD00364E93 /* PropertyBasedTests.swift */; };
 		5D6634E820040E7D00364E93 /* PropertyBasedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6634E5200403BD00364E93 /* PropertyBasedTests.swift */; };
@@ -62,6 +65,7 @@
 		52D6DA0F1BF000BD002C0205 /* SortedArray.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SortedArray.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D6634292004011100364E93 /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/Mac/SwiftCheck.framework; sourceTree = "<group>"; };
 		5D6634E22004020600364E93 /* Carthage */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Carthage; sourceTree = SOURCE_ROOT; };
+		5D6634242003E2C000364E93 /* PerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PerformanceTests.swift; path = Tests/SortedArrayTests/PerformanceTests.swift; sourceTree = "<group>"; };
 		5D6634E5200403BD00364E93 /* PropertyBasedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PropertyBasedTests.swift; path = Tests/SortedArrayTests/PropertyBasedTests.swift; sourceTree = "<group>"; };
 		5D6634E920040EA000364E93 /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/iOS/SwiftCheck.framework; sourceTree = "<group>"; };
 		5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestHelpers.swift; path = Tests/SortedArrayTests/TestHelpers.swift; sourceTree = "<group>"; };
@@ -136,6 +140,7 @@
 			children = (
 				52D6D9961BEFF375002C0205 /* SortedArray.swift */,
 				52D6D9971BEFF375002C0205 /* SortedArrayTests.swift */,
+				5D6634242003E2C000364E93 /* PerformanceTests.swift */,
 				5D6634E5200403BD00364E93 /* PropertyBasedTests.swift */,
 				5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */,
 				52D6D99C1BEFF38C002C0205 /* Configs */,
@@ -483,6 +488,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52D6D99B1BEFF375002C0205 /* SortedArrayTests.swift in Sources */,
+				5D6634252003E2C000364E93 /* PerformanceTests.swift in Sources */,
 				5D6634E720040E7C00364E93 /* PropertyBasedTests.swift in Sources */,
 				5DA058D21E8813F3006FA2B1 /* TestHelpers.swift in Sources */,
 			);
@@ -517,6 +523,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD7502861C68FDDC006590AF /* SortedArrayTests.swift in Sources */,
+				5D6634262003E2C000364E93 /* PerformanceTests.swift in Sources */,
 				5D6634E6200403BD00364E93 /* PropertyBasedTests.swift in Sources */,
 				5DA058D31E8813F3006FA2B1 /* TestHelpers.swift in Sources */,
 			);
@@ -527,6 +534,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD75029A1C690CBE006590AF /* SortedArrayTests.swift in Sources */,
+				5D6634272003E2C000364E93 /* PerformanceTests.swift in Sources */,
 				5D6634E820040E7D00364E93 /* PropertyBasedTests.swift in Sources */,
 				5DA058D41E8813F3006FA2B1 /* TestHelpers.swift in Sources */,
 			);
