@@ -43,5 +43,5 @@ elif [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     # Share the current directory (where Travis checked out the repository)
     # with the Docker container.
     # Then, in the container, cd into that directory and run the tests.
-    docker run --volume "$(pwd):/package" "${DOCKER_IMAGE}" /bin/bash -c "cd /package; swift --version; swift package clean; swift build; swift test"
+    docker run --volume "$(pwd):/package" "${DOCKER_IMAGE}" /bin/bash -c "cd /package; swift --version; swift package clean; swift package resolve; swift build; swift test"
 fi
