@@ -358,6 +358,13 @@ fileprivate enum Match<Index: Comparable> {
     case notFound(insertAt: Index)
 }
 
+extension Range where Bound == Int {
+    var middle: Int? {
+        guard !isEmpty else { return nil }
+        return lowerBound + count / 2
+    }
+}
+
 extension SortedArray {
     /// Searches the array for `element` using binary search.
     ///
@@ -375,26 +382,15 @@ extension SortedArray {
     }
 
     fileprivate func search(for element: Element, in range: Range<Index>) -> Match<Index> {
-        guard !range.isEmpty else { return .notFound(insertAt: range.upperBound) }
-        var left = range.lowerBound
-        var right = index(before: range.upperBound)
-
-        while left <= right {
-            let dist = distance(from: left, to: right)
-            let mid = index(left, offsetBy: dist/2)
-            let candidate = self[mid]
-
-            switch compare(candidate, element) {
-            case .orderedAscending:
-                left = index(after: mid)
-            case .orderedDescending:
-                right = index(before: mid)
-            case .orderedSame:
-                return .found(at: mid)
-            }
+        guard let middle = range.middle else { return .notFound(insertAt: range.upperBound) }
+        switch compare(element, self[middle]) {
+        case .orderedDescending:
+            return search(for: element, in: index(after: middle)..<range.upperBound)
+        case .orderedAscending:
+            return search(for: element, in: range.lowerBound..<middle)
+        case .orderedSame:
+            return .found(at: middle)
         }
-        // Not found. left is the index where this element should be placed if it were inserted.
-        return .notFound(insertAt: left)
     }
 }
 
