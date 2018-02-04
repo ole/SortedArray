@@ -62,21 +62,6 @@ class PerformanceTests: XCTestCase {
     }
 }
 
-class Box<T: Comparable>: Comparable {
-    static func <(lhs: Box<T>, rhs: Box<T>) -> Bool {
-        return lhs.value < rhs.value
-    }
-
-    static func ==(lhs: Box<T>, rhs: Box<T>) -> Bool {
-        return lhs.value == rhs.value
-    }
-
-    let value: T
-    init(_ value: T) {
-        self.value = value
-    }
-}
-
 extension PerformanceTests {
     static var allTests : [(String, (PerformanceTests) -> () throws -> Void)] {
         return [
@@ -88,5 +73,21 @@ extension PerformanceTests {
             ("testPerformanceOfIndexOfObjectInRange", testPerformanceOfIndexOfObjectInRange),
             ("testPerformanceOfLastIndexOfObjectInRange", testPerformanceOfLastIndexOfObjectInRange),
         ]
+    }
+}
+
+/// Helper class
+class Box<T: Comparable>: Comparable {
+    static func ==(lhs: Box<T>, rhs: Box<T>) -> Bool {
+        return lhs.value == rhs.value
+    }
+
+    static func <(lhs: Box<T>, rhs: Box<T>) -> Bool {
+        return lhs.value < rhs.value
+    }
+
+    let value: T
+    init(_ value: T) {
+        self.value = value
     }
 }
