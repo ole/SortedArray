@@ -1,33 +1,23 @@
+env:
+  global:
+    # GITHUB_ACCESS_TOKEN (no private permissions)
+    secure: jkl+MLo9UWzjeNKy7o5tedMWlkfy07hLKtqRF2HiSiIfl0NnL6Hb+KqLV4JW1T9v2XhhtysWdgfcfRWCzAPximxaoSiea64/n9DNv9B6FwRKM46nMg0FdRLPVAuu/gKQhjIHkI5qACPb4zHqu4+ElMDTv2cDmRnFkBC7AQX0+URGMMCXFFV2kXYXj4MSouBebMAknJCq1zFxBcKV7ieWxXTwPqBsuIHwXQe4xh4CsGZINXAPmpWtekCus3boDWv/97F6zFcKK2dGQblduKFCQ/heI9AHDbTub+IGC5srivV9l8F9ARcShxkiv04if1zUsS0ycn8P/27PPp5ut0p2p8yZvu0EmT0owdZAZLsgIMtt73UUP5thw3sSKizCdxM/a34mkcpvW7nPpi55LpFyUSpO4r2ZiBFxComyxW1GtojhAjqsXy4jmKohGAL1RmXZnlb396T/5nFxokFEXBIxJE9ssdMDQcLWEZBc/96na8J1I2KE0bTKv3CjlwQri9UjRVKjMc0ebbzHoDLomG5jKas65F4HhItdMf2skOv0mZ/Ui/dZbJ2P1uB1CDh7nKUD157a2IRkeLwmYH/7j9WbBJSubm91CH89uP+uc/QsbbfoD8NCQD+Fh0dok+o5gRV3nCGKJ4mjtcUbOn9IroGkjqqRrqgatfOTpsxccO+iwzQ=
+
 matrix:
   include:
     - os: osx
       language: generic
       # Xcode version implicitly defines the Swift version to be used on macOS.
       osx_image: xcode8.3
-
+      before_script:
+        - carthage bootstrap
+    
     - os: osx
       language: generic
       # Xcode version implicitly defines the Swift version to be used on macOS.
       osx_image: xcode9.2
-
-    - os: linux
-      language: generic
-      sudo: required
-      services:
-        - docker
-      env:
-        # The Docker image to use on Linux in Docker notation,
-        # e.g. "swift" or "myusername/myswift" or "swift:3.0.2".
-        # The image must have Swift installed so that the `swift`
-        # command is in the `$PATH`.
-        #
-        # I recommend Docker Hub's "official" (not maintained by Apple)
-        # Swift image at https://hub.docker.com/r/_/swift/. Its name
-        # is simply "swift".
-        #
-        # You can use tags to select a specific Swift version if the
-        # image supports it, e.g. "swift:3.0.2" or "swift:latest".
-        DOCKER_IMAGE="swift:3.1"
+      before_script:
+        - carthage bootstrap
 
     - os: linux
       language: generic
