@@ -99,13 +99,15 @@ extension SortedArray: RandomAccessCollection {
     public subscript(position: Index) -> Element {
         return _elements[position]
     }
+}
 
-    /// Like `Sequence.filter(_:)`, but returns a `SortedArray` instead of an `Array`.
-    /// We can do this efficiently because filtering doesn't change the sort order.
-    public func filter(_ isIncluded: (Element) throws -> Bool) rethrows -> SortedArray<Element> {
-        let newElements = try _elements.filter(isIncluded)
-        return SortedArray(sorted: newElements, areInIncreasingOrder: areInIncreasingOrder)
-    }
+extension SortedArray {
+  /// Like `Sequence.filter(_:)`, but returns a `SortedArray` instead of an `Array`.
+  /// We can do this efficiently because filtering doesn't change the sort order.
+  public func filter(_ isIncluded: (Element) throws -> Bool) rethrows -> SortedArray<Element> {
+    let newElements = try _elements.filter(isIncluded)
+    return SortedArray(sorted: newElements, areInIncreasingOrder: areInIncreasingOrder)
+  }
 }
 
 extension SortedArray: CustomStringConvertible, CustomDebugStringConvertible {
