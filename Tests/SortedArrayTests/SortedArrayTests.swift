@@ -125,7 +125,7 @@ class SortedArrayTests: XCTestCase {
     }
 
     func testIndexOfReturnsNilWhenNotFound() {
-        let sut = SortedArray(unsorted: "Hello World".characters)
+        let sut = SortedArray(unsorted: "Hello World")
         let index = sut.index(of: "h")
         XCTAssertNil(index)
     }
@@ -155,7 +155,7 @@ class SortedArrayTests: XCTestCase {
     }
 
     func testIndexOfFindsFirstIndexOfDuplicateElements3() {
-        let sut = SortedArray(unsorted: String(repeating: "A", count: 10).characters)
+        let sut = SortedArray(unsorted: String(repeating: "A", count: 10))
         let index = sut.index(of: "A")
         XCTAssertEqual(index, 0)
     }
@@ -192,7 +192,7 @@ class SortedArrayTests: XCTestCase {
     }
 
     func testLastIndexOfReturnsNilWhenNotFound() {
-        let sut = SortedArray(unsorted: "Hello World".characters)
+        let sut = SortedArray(unsorted: "Hello World")
         let index = sut.lastIndex(of: "h")
         XCTAssertNil(index)
     }
@@ -222,13 +222,13 @@ class SortedArrayTests: XCTestCase {
     }
 
     func testLastIndexOfFindsLastIndexOfDuplicateElements3() {
-        let sut = SortedArray(unsorted: String(repeating: "A", count: 10).characters)
+        let sut = SortedArray(unsorted: String(repeating: "A", count: 10))
         let index = sut.lastIndex(of: "A")
         XCTAssertEqual(index, 9)
     }
 
     func testsContains() {
-        let sut = SortedArray(unsorted: "Lorem ipsum".characters)
+        let sut = SortedArray(unsorted: "Lorem ipsum")
         XCTAssertTrue(sut.contains(" "))
         XCTAssertFalse(sut.contains("a"))
     }
