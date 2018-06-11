@@ -99,7 +99,9 @@ extension SortedArray: RandomAccessCollection {
     public subscript(position: Index) -> Element {
         return _elements[position]
     }
+}
 
+extension SortedArray {
     /// Like `Sequence.filter(_:)`, but returns a `SortedArray` instead of an `Array`.
     /// We can do this efficiently because filtering doesn't change the sort order.
     public func filter(_ isIncluded: (Element) throws -> Bool) rethrows -> SortedArray<Element> {
