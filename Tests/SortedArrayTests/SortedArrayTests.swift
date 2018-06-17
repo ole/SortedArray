@@ -108,68 +108,74 @@ class SortedArrayTests: XCTestCase {
 
     func testIndexOfFindsElementInMiddle() {
         let sut = SortedArray(unsorted: ["a","z","r","k"])
-        let index = sut.index(of: "k")
+        let index = sut.firstIndex(of: "k")
         XCTAssertEqual(index, 1)
     }
 
     func testIndexOfFindsFirstElement() {
         let sut = SortedArray(sorted: 1..<10)
-        let index = sut.index(of: 1)
+        let index = sut.firstIndex(of: 1)
         XCTAssertEqual(index, 0)
     }
 
     func testIndexOfFindsLastElement() {
         let sut = SortedArray(sorted: 1..<10)
-        let index = sut.index(of: 9)
+        let index = sut.firstIndex(of: 9)
         XCTAssertEqual(index, 8)
     }
 
     func testIndexOfReturnsNilWhenNotFound() {
         let sut = SortedArray(unsorted: "Hello World")
-        let index = sut.index(of: "h")
+        let index = sut.firstIndex(of: "h")
         XCTAssertNil(index)
     }
 
     func testIndexOfReturnsNilForEmptyArray() {
         let sut = SortedArray<Int>()
-        let index = sut.index(of: 1)
+        let index = sut.firstIndex(of: 1)
         XCTAssertNil(index)
     }
 
     func testIndexOfCanDealWithSingleElementArray() {
         let sut = SortedArray<Int>(unsorted: [5])
-        let index = sut.index(of: 5)
+        let index = sut.firstIndex(of: 5)
         XCTAssertEqual(index, 0)
     }
 
     func testIndexOfFindsFirstIndexOfDuplicateElements1() {
         let sut = SortedArray(unsorted: [1,2,3,3,3,3,3,3,3,3,4,5])
-        let index = sut.index(of: 3)
+        let index = sut.firstIndex(of: 3)
         XCTAssertEqual(index, 2)
     }
 
     func testIndexOfFindsFirstIndexOfDuplicateElements2() {
         let sut = SortedArray(unsorted: [1,4,4,4,4,4,4,4,4,3,2])
-        let index = sut.index(of: 4)
+        let index = sut.firstIndex(of: 4)
         XCTAssertEqual(index, 3)
     }
 
     func testIndexOfFindsFirstIndexOfDuplicateElements3() {
         let sut = SortedArray(unsorted: String(repeating: "A", count: 10))
-        let index = sut.index(of: "A")
+        let index = sut.firstIndex(of: "A")
         XCTAssertEqual(index, 0)
     }
 
     func testIndexOfFindsFirstIndexOfDuplicateElements4() {
         let sut = SortedArray<Character>(unsorted: Array(repeating: "a", count: 100_000))
-        let index = sut.index(of: "a")
+        let index = sut.firstIndex(of: "a")
         XCTAssertEqual(index, 0)
     }
 
     func testIndexOfFindsFirstIndexOfDuplicateElements5() {
         let sourceArray = Array(repeating: 5, count: 100_000) + [1,2,6,7,8,9]
         let sut = SortedArray(unsorted: sourceArray)
-        let index = sut.index(of: 5)
+        let index = sut.firstIndex(of: 5)
+        XCTAssertEqual(index, 2)
+    }
+
+    func testIndexOfExistsAndIsAnAliasForFirstIndexOf() {
+        let sut = SortedArray(unsorted: [1,2,3,3,3,3,3,3,3,3,4,5])
+        let index = sut.index(of: 3)
         XCTAssertEqual(index, 2)
     }
 
@@ -369,6 +375,7 @@ extension SortedArrayTests {
             ("testIndexOfFindsFirstIndexOfDuplicateElements3", testIndexOfFindsFirstIndexOfDuplicateElements3),
             ("testIndexOfFindsFirstIndexOfDuplicateElements4", testIndexOfFindsFirstIndexOfDuplicateElements4),
             ("testIndexOfFindsFirstIndexOfDuplicateElements5", testIndexOfFindsFirstIndexOfDuplicateElements4),
+            ("testIndexOfExistsAndIsAnAliasForFirstIndexOf", testIndexOfExistsAndIsAnAliasForFirstIndexOf),
             ("testLastIndexOfFindsElementInMiddle", testLastIndexOfFindsElementInMiddle),
             ("testLastIndexOfFindsFirstElement", testLastIndexOfFindsFirstElement),
             ("testLastIndexOfFindsLastElement", testLastIndexOfFindsLastElement),

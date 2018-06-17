@@ -252,7 +252,7 @@ extension SortedArray {
     /// Returns the first index where the specified value appears in the collection.
     ///
     /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
-    public func index(of element: Element) -> Index? {
+    public func firstIndex(of element: Element) -> Index? {
         var range: Range<Index> = startIndex ..< endIndex
         var match: Index? = nil
         while case let .found(m) = search(for: element, in: range) {
@@ -272,6 +272,14 @@ extension SortedArray {
             }
         }
         return match
+    }
+
+    /// Returns the first index where the specified value appears in the collection.
+    /// Old name for `firstIndex(of:)`.
+    /// - Seealso: `firstIndex(of:)`
+    @inlinable
+    public func index(of element: Element) -> Index? {
+        return firstIndex(of: element)
     }
 
     /// Returns a Boolean value indicating whether the sequence contains the given element.
