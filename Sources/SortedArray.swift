@@ -277,7 +277,6 @@ extension SortedArray {
     /// Returns the first index where the specified value appears in the collection.
     /// Old name for `firstIndex(of:)`.
     /// - Seealso: `firstIndex(of:)`
-    @inlinable
     public func index(of element: Element) -> Index? {
         return firstIndex(of: element)
     }
