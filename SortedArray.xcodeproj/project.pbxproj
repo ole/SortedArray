@@ -58,6 +58,11 @@
 		52D6D9F01BEFFFBE002C0205 /* SortedArray.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SortedArray.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6DA0F1BF000BD002C0205 /* SortedArray.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SortedArray.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D6634242003E2C000364E93 /* PerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PerformanceTests.swift; path = Tests/SortedArrayTests/PerformanceTests.swift; sourceTree = "<group>"; };
+		5D7AAFCC20D71F4200080885 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		5D7AAFCD20D71F4200080885 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		5D7AAFCE20D71F4200080885 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		5D7AAFD020D722B100080885 /* travis-build-script.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "travis-build-script.sh"; sourceTree = "<group>"; };
+		5D7AAFD120D7231E00080885 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TestHelpers.swift; path = Tests/SortedArrayTests/TestHelpers.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* SortedArray.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SortedArray.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* SortedArrayTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SortedArrayTests.plist; sourceTree = "<group>"; };
@@ -124,10 +129,12 @@
 		52D6D9721BEFF229002C0205 = {
 			isa = PBXGroup;
 			children = (
+				5D7AAFCB20D71F0800080885 /* Other files (not in any target) */,
 				52D6D9961BEFF375002C0205 /* SortedArray.swift */,
 				52D6D9971BEFF375002C0205 /* SortedArrayTests.swift */,
 				5D6634242003E2C000364E93 /* PerformanceTests.swift */,
 				5DA058D11E8813F3006FA2B1 /* TestHelpers.swift */,
+				5D7AAFCF20D722B100080885 /* scripts */,
 				52D6D99C1BEFF38C002C0205 /* Configs */,
 				52D6D97D1BEFF229002C0205 /* Products */,
 			);
@@ -154,6 +161,25 @@
 				DD7502731C68FC20006590AF /* Tests */,
 			);
 			path = Configs;
+			sourceTree = "<group>";
+		};
+		5D7AAFCB20D71F0800080885 /* Other files (not in any target) */ = {
+			isa = PBXGroup;
+			children = (
+				5D7AAFCE20D71F4200080885 /* README.md */,
+				5D7AAFCC20D71F4200080885 /* LICENSE.txt */,
+				5D7AAFCD20D71F4200080885 /* Package.swift */,
+				5D7AAFD120D7231E00080885 /* .travis.yml */,
+			);
+			name = "Other files (not in any target)";
+			sourceTree = "<group>";
+		};
+		5D7AAFCF20D722B100080885 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				5D7AAFD020D722B100080885 /* travis-build-script.sh */,
+			);
+			path = scripts;
 			sourceTree = "<group>";
 		};
 		DD7502721C68FC1B006590AF /* Frameworks */ = {
