@@ -273,6 +273,13 @@ class SortedArrayTests: XCTestCase {
         assertElementsEqual(sut, ["a","b"])
     }
 
+    func testRemoveCountableSubrange() {
+        var sut = SortedArray(unsorted: ["a","d","c","b"])
+        let countableRange: CountableRange<Int> = 2..<4
+        sut.removeSubrange(countableRange)
+        assertElementsEqual(sut, ["a","b"])
+    }
+
     func testRemoveFirst() {
         var sut = SortedArray(unsorted: [3,4,2,1])
         let removedElement = sut.removeFirst()
@@ -379,6 +386,7 @@ extension SortedArrayTests {
             ("testFilter", testFilter),
             ("testRemoveAtIndex", testRemoveAtIndex),
             ("testRemoveSubrange", testRemoveSubrange),
+            ("testRemoveCountableSubrange", testRemoveCountableSubrange),
             ("testRemoveFirst", testRemoveFirst),
             ("testRemoveFirstN", testRemoveFirstN),
             ("testRemoveLast", testRemoveLast),

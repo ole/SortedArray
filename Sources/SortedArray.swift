@@ -150,6 +150,18 @@ extension SortedArray {
         _elements.removeSubrange(bounds)
     }
 
+    // Starting with Swift 4.2, CountableRange and CountableClosedRange are typealiases for
+    // Range and ClosedRange, so these methods trigger "Invalid redeclaration" errors.
+    // Compile them only for older compiler versions.
+    // swift(3.1): Latest version of Swift 3 under the Swift 3 compiler.
+    // swift(3.2): Swift 4 compiler under Swift 3 mode.
+    // swift(3.3): Swift 4.1 compiler under Swift 3 mode.
+    // swift(3.4): Swift 4.2 compiler under Swift 3 mode.
+    // swift(4.0): Swift 4 compiler
+    // swift(4.1): Swift 4.1 compiler
+    // swift(4.1.50): Swift 4.2 compiler in Swift 4 mode
+    // swift(4.2): Swift 4.2 compiler
+    #if !swift(>=4.1.50)
     /// Removes the elements in the specified subrange from the array.
     ///
     /// - Parameter bounds: The range of the array to be removed. The
@@ -169,6 +181,7 @@ extension SortedArray {
     public mutating func removeSubrange(_ bounds: CountableClosedRange<Int>) {
         _elements.removeSubrange(bounds)
     }
+    #endif
 
     /// Removes the specified number of elements from the beginning of the
     /// array.
