@@ -1,6 +1,6 @@
 # SortedArray
 
-A sorted array type for Swift 3.1+ and 4.0+.
+A sorted array type for Swift 4.0+.
 
 Provides the `SortedArray` type, an array that keeps its elements sorted according to a given sort predicate.
 
@@ -14,7 +14,14 @@ For more info, see the [GitHub repo](https://github.com/ole/SortedArray) and my 
 
 ## Supported Platforms
 
-Supports Swift versions 3.1, 3.2, and 4.0. Not compatible with Swift 3.0. The last version compatible with Swift 3.0 is v0.4.
+The current release supports Swift 4.0 and up.
+
+If you need support for older Swift version, here's a list of the latest releases that support specific Swift versions:
+
+| Swift version | Latest SortedArray release |
+| 4.x | master |
+| 3.x | [0.6.0](https://github.com/ole/SortedArray/releases/tag/0.6.0) |
+| 3.0 | [0.4](https://github.com/ole/SortedArray/releases/tag/0.4.0) |
 
 Since the code has no dependencies other than the Swift standard library (it doesn't even use Foundation), it should work on all platforms where Swift is available.
 
@@ -43,7 +50,7 @@ let package = Package(
 Add this to your `Cartfile`:
 
 ```
-github "ole/SortedArray" ~> 0.3
+github "ole/SortedArray" ~> 0.7
 ```
 
 Integration via Carthage should work for macOS, iOS, tvOS, and watchOS targets.

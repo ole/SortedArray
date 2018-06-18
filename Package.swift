@@ -1,4 +1,4 @@
-// swift-tools-version:3.1
+// swift-tools-version:4.0
 import PackageDescription
 
 /// Provides the `SortedArray` type, an array that keeps its elements
@@ -10,5 +10,19 @@ import PackageDescription
 ///
 let package = Package(
     name: "SortedArray",
-    swiftLanguageVersions: [3, 4]
+    products: [
+        .library(
+            name: "SortedArray",
+            targets: ["SortedArray"]),
+    ],
+    targets: [
+        .target(
+            name: "SortedArray",
+            dependencies: [],
+            path: "Sources"),
+        .testTarget(
+            name: "SortedArrayTests",
+            dependencies: ["SortedArray"]),
+    ],
+    swiftLanguageVersions: [4]
 )
