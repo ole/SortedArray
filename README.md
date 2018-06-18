@@ -19,9 +19,10 @@ The current release supports Swift 4.0 and up.
 If you need support for older Swift version, here's a list of the latest releases that support specific Swift versions:
 
 | Swift version | Latest SortedArray release |
-| 4.x | master |
-| 3.x | [0.6.0](https://github.com/ole/SortedArray/releases/tag/0.6.0) |
-| 3.0 | [0.4](https://github.com/ole/SortedArray/releases/tag/0.4.0) |
+| ------------- | -------------------------- |
+| 4.x           | master                     |
+| 3.x           | [0.6.0](https://github.com/ole/SortedArray/releases/tag/0.6.0) |
+| 3.0           | [0.4](https://github.com/ole/SortedArray/releases/tag/0.4.0)   |
 
 Since the code has no dependencies other than the Swift standard library (it doesn't even use Foundation), it should work on all platforms where Swift is available.
 
