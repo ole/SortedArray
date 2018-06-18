@@ -164,25 +164,25 @@ extension SortedArray {
     // swift(4.1.50): Swift 4.2 compiler in Swift 4 mode
     // swift(4.2): Swift 4.2 compiler
     #if !swift(>=4.1.50)
-    /// Removes the elements in the specified subrange from the array.
-    ///
-    /// - Parameter bounds: The range of the array to be removed. The
-    ///   bounds of the range must be valid indices of the array.
-    ///
-    /// - Complexity: O(_n_), where _n_ is the length of the array.
-    public mutating func removeSubrange(_ bounds: CountableRange<Int>) {
-        _elements.removeSubrange(bounds)
-    }
+        /// Removes the elements in the specified subrange from the array.
+        ///
+        /// - Parameter bounds: The range of the array to be removed. The
+        ///   bounds of the range must be valid indices of the array.
+        ///
+        /// - Complexity: O(_n_), where _n_ is the length of the array.
+        public mutating func removeSubrange(_ bounds: CountableRange<Int>) {
+            _elements.removeSubrange(bounds)
+        }
 
-    /// Removes the elements in the specified subrange from the array.
-    ///
-    /// - Parameter bounds: The range of the array to be removed. The
-    ///   bounds of the range must be valid indices of the array.
-    ///
-    /// - Complexity: O(_n_), where _n_ is the length of the array.
-    public mutating func removeSubrange(_ bounds: CountableClosedRange<Int>) {
-        _elements.removeSubrange(bounds)
-    }
+        /// Removes the elements in the specified subrange from the array.
+        ///
+        /// - Parameter bounds: The range of the array to be removed. The
+        ///   bounds of the range must be valid indices of the array.
+        ///
+        /// - Complexity: O(_n_), where _n_ is the length of the array.
+        public mutating func removeSubrange(_ bounds: CountableClosedRange<Int>) {
+            _elements.removeSubrange(bounds)
+        }
     #endif
 
     /// Removes the specified number of elements from the beginning of the
