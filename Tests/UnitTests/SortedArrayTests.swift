@@ -332,6 +332,24 @@ class SortedArrayTests: XCTestCase {
         assertElementsEqual(sut, [1,2])
     }
 
+    func testIsEquatableInSwift4_1AndHigher() {
+        #if swift(>=4.1)
+            let array1 = SortedArray(unsorted: [3,2,1])
+            let array2 = SortedArray(unsorted: 1...3)
+            XCTAssertEqual(array1, array2)
+        #endif
+    }
+
+    func testComparatorFunctionIsNotRelevantForEquatable() {
+        #if swift(>=4.1)
+            let array1 = SortedArray(unsorted: [1,1,1], areInIncreasingOrder: <)
+            let array2 = SortedArray(unsorted: [1,1,1], areInIncreasingOrder: >)
+            let array3 = SortedArray(unsorted: [3,2,1,4])
+            XCTAssertEqual(array1, array2)
+            XCTAssertNotEqual(array1, array3)
+        #endif
+    }
+
     func testImplementsEqual() {
         let sut = SortedArray(unsorted: [3,2,1])
         XCTAssertTrue(sut == SortedArray(unsorted: 1...3))
@@ -340,6 +358,16 @@ class SortedArrayTests: XCTestCase {
     func testImplementsNotEqual() {
         let sut = SortedArray(unsorted: 1...3)
         XCTAssertTrue(sut != SortedArray(unsorted: 1...4))
+    }
+
+    func testIsHashableInSwift4_2AndHigher() {
+        #if swift(>=4.1.50)
+            let array1 = SortedArray(unsorted: [3,2,1])
+            let array2 = SortedArray(unsorted: 1...3)
+            let array3 = SortedArray(unsorted: [3,2,1,4])
+            XCTAssertEqual(array1.hashValue, array2.hashValue)
+            XCTAssertNotEqual(array1.hashValue, array3.hashValue)
+        #endif
     }
 }
 
@@ -398,8 +426,11 @@ extension SortedArrayTests {
             ("testRemoveElementAtBeginningPreservesSortOrder", testRemoveElementAtBeginningPreservesSortOrder),
             ("testRemoveElementInMiddlePreservesSortOrder", testRemoveElementInMiddlePreservesSortOrder),
             ("testRemoveElementAtEndPreservesSortOrder", testRemoveElementAtEndPreservesSortOrder),
+            ("testIsEquatableInSwift4_1AndHigher", testIsEquatableInSwift4_1AndHigher),
+            ("testComparatorFunctionIsNotRelevantForEquatable", testComparatorFunctionIsNotRelevantForEquatable),
             ("testImplementsEqual", testImplementsEqual),
             ("testImplementsNotEqual", testImplementsNotEqual),
+            ("testIsHashableInSwift4_2AndHigher", testIsHashableInSwift4_2AndHigher),
         ]
     }
 }

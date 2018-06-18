@@ -416,10 +416,27 @@ extension SortedArray {
     }
 }
 
-public func ==<Element: Equatable> (lhs: SortedArray<Element>, rhs: SortedArray<Element>) -> Bool {
-    return lhs._elements == rhs._elements
-}
+#if swift(>=4.1)
+    extension SortedArray: Equatable where Element: Equatable {
+        public static func == (lhs: SortedArray<Element>, rhs: SortedArray<Element>) -> Bool {
+            // Ignore the comparator function for Equatable
+            return lhs._elements == rhs._elements
+        }
+    }
+#else
+    public func ==<Element: Equatable> (lhs: SortedArray<Element>, rhs: SortedArray<Element>) -> Bool {
+        return lhs._elements == rhs._elements
+    }
 
-public func !=<Element: Equatable> (lhs: SortedArray<Element>, rhs: SortedArray<Element>) -> Bool {
-    return lhs._elements != rhs._elements
-}
+    public func !=<Element: Equatable> (lhs: SortedArray<Element>, rhs: SortedArray<Element>) -> Bool {
+        return lhs._elements != rhs._elements
+    }
+#endif
+
+#if swift(>=4.1.50)
+    extension SortedArray: Hashable where Element: Hashable {
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(_elements)
+        }
+    }
+#endif
