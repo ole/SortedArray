@@ -19,7 +19,7 @@ public struct SortedArray<Element> {
     }
 
     /// Initializes the array with a sequence of unsorted elements and a comparison predicate.
-    public init<S: Sequence>(unsorted: S, areInIncreasingOrder: @escaping Comparator<Element>) where S.Iterator.Element == Element {
+    public init<S: Sequence>(unsorted: S, areInIncreasingOrder: @escaping Comparator<Element>) where S.Element == Element {
         let sorted = unsorted.sorted(by: areInIncreasingOrder)
         self._elements = sorted
         self.areInIncreasingOrder = areInIncreasingOrder
@@ -30,7 +30,7 @@ public struct SortedArray<Element> {
     /// This is faster than `init(unsorted:areInIncreasingOrder:)` because the elements don't have to sorted again.
     ///
     /// - Precondition: `sorted` is sorted according to the given comparison predicate. If you violate this condition, the behavior is undefined.
-    public init<S: Sequence>(sorted: S, areInIncreasingOrder: @escaping Comparator<Element>) where S.Iterator.Element == Element {
+    public init<S: Sequence>(sorted: S, areInIncreasingOrder: @escaping Comparator<Element>) where S.Element == Element {
         self._elements = Array(sorted)
         self.areInIncreasingOrder = areInIncreasingOrder
     }
@@ -55,7 +55,7 @@ public struct SortedArray<Element> {
     /// we only need to re-sort once.
     ///
     /// - Complexity: O(_n * log(n)_) where _n_ is the size of the resulting array.
-    public mutating func insert<S: Sequence>(contentsOf newElements: S) where S.Iterator.Element == Element {
+    public mutating func insert<S: Sequence>(contentsOf newElements: S) where S.Element == Element {
         _elements.append(contentsOf: newElements)
         _elements.sort(by: areInIncreasingOrder)
     }
@@ -68,7 +68,7 @@ extension SortedArray where Element: Comparable {
     }
 
     /// Initializes the array with a sequence of unsorted elements. Uses `<` as the comparison predicate.
-    public init<S: Sequence>(unsorted: S) where S.Iterator.Element == Element {
+    public init<S: Sequence>(unsorted: S) where S.Element == Element {
         self.init(unsorted: unsorted, areInIncreasingOrder: <)
     }
 
@@ -77,7 +77,7 @@ extension SortedArray where Element: Comparable {
     /// This is faster than `init(unsorted:)` because the elements don't have to sorted again.
     ///
     /// - Precondition: `sorted` is sorted according to the `<` predicate. If you violate this condition, the behavior is undefined.
-    public init<S: Sequence>(sorted: S) where S.Iterator.Element == Element {
+    public init<S: Sequence>(sorted: S) where S.Element == Element {
         self.init(sorted: sorted, areInIncreasingOrder: <)
     }
 }
@@ -164,25 +164,25 @@ extension SortedArray {
     // swift(4.1.50): Swift 4.2 compiler in Swift 4 mode
     // swift(4.2): Swift 4.2 compiler
     #if !swift(>=4.1.50)
-    /// Removes the elements in the specified subrange from the array.
-    ///
-    /// - Parameter bounds: The range of the array to be removed. The
-    ///   bounds of the range must be valid indices of the array.
-    ///
-    /// - Complexity: O(_n_), where _n_ is the length of the array.
-    public mutating func removeSubrange(_ bounds: CountableRange<Int>) {
-        _elements.removeSubrange(bounds)
-    }
+        /// Removes the elements in the specified subrange from the array.
+        ///
+        /// - Parameter bounds: The range of the array to be removed. The
+        ///   bounds of the range must be valid indices of the array.
+        ///
+        /// - Complexity: O(_n_), where _n_ is the length of the array.
+        public mutating func removeSubrange(_ bounds: CountableRange<Int>) {
+            _elements.removeSubrange(bounds)
+        }
 
-    /// Removes the elements in the specified subrange from the array.
-    ///
-    /// - Parameter bounds: The range of the array to be removed. The
-    ///   bounds of the range must be valid indices of the array.
-    ///
-    /// - Complexity: O(_n_), where _n_ is the length of the array.
-    public mutating func removeSubrange(_ bounds: CountableClosedRange<Int>) {
-        _elements.removeSubrange(bounds)
-    }
+        /// Removes the elements in the specified subrange from the array.
+        ///
+        /// - Parameter bounds: The range of the array to be removed. The
+        ///   bounds of the range must be valid indices of the array.
+        ///
+        /// - Complexity: O(_n_), where _n_ is the length of the array.
+        public mutating func removeSubrange(_ bounds: CountableClosedRange<Int>) {
+            _elements.removeSubrange(bounds)
+        }
     #endif
 
     /// Removes the specified number of elements from the beginning of the
@@ -416,10 +416,27 @@ extension SortedArray {
     }
 }
 
-public func ==<Element: Equatable> (lhs: SortedArray<Element>, rhs: SortedArray<Element>) -> Bool {
-    return lhs._elements == rhs._elements
-}
+#if swift(>=4.1)
+    extension SortedArray: Equatable where Element: Equatable {
+        public static func == (lhs: SortedArray<Element>, rhs: SortedArray<Element>) -> Bool {
+            // Ignore the comparator function for Equatable
+            return lhs._elements == rhs._elements
+        }
+    }
+#else
+    public func ==<Element: Equatable> (lhs: SortedArray<Element>, rhs: SortedArray<Element>) -> Bool {
+        return lhs._elements == rhs._elements
+    }
 
-public func !=<Element: Equatable> (lhs: SortedArray<Element>, rhs: SortedArray<Element>) -> Bool {
-    return lhs._elements != rhs._elements
-}
+    public func !=<Element: Equatable> (lhs: SortedArray<Element>, rhs: SortedArray<Element>) -> Bool {
+        return lhs._elements != rhs._elements
+    }
+#endif
+
+#if swift(>=4.1.50)
+    extension SortedArray: Hashable where Element: Hashable {
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(_elements)
+        }
+    }
+#endif
