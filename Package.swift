@@ -21,7 +21,10 @@ let package = Package(
             dependencies: [],
             path: "Sources"),
         .testTarget(
-            name: "SortedArrayTests",
+            name: "UnitTests",
+            dependencies: ["SortedArray"]),
+        .testTarget(
+            name: "PerformanceTests",
             dependencies: ["SortedArray"]),
     ],
     swiftLanguageVersions: [4]

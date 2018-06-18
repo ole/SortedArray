@@ -1,5 +1,6 @@
 import XCTest
-@testable import SortedArrayTests
+@testable import UnitTests
+@testable import PerformanceTests
 
 XCTMain([
      testCase(SortedArrayTests.allTests),

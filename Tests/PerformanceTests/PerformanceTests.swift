@@ -4,11 +4,7 @@ import XCTest
 class PerformanceTests: XCTestCase {
     func testLinuxTestSuiteIncludesAllTests() {
         #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-            #if swift(>=4.0)
-                let darwinTestCount = PerformanceTests.defaultTestSuite.testCaseCount
-            #else
-                let darwinTestCount = Int(PerformanceTests.defaultTestSuite().testCaseCount)
-            #endif
+            let darwinTestCount = PerformanceTests.defaultTestSuite.testCaseCount
             let linuxTestCount = PerformanceTests.allTests.count
             XCTAssertEqual(linuxTestCount, darwinTestCount, "allTests (used for testing on Linux) is missing \(darwinTestCount - linuxTestCount) tests")
         #endif
