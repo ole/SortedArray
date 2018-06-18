@@ -15,7 +15,8 @@ if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
     swift --version
     swift package clean
     swift build
-    swift test
+    swift test --parallel --filter UnitTests
+    swift test --filter PerformanceTests
 
     # 2. Test using xcodebuild
     echo -e "\nBuilding with xcodebuild\n========================"
@@ -43,5 +44,5 @@ elif [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     # Share the current directory (where Travis checked out the repository)
     # with the Docker container.
     # Then, in the container, cd into that directory and run the tests.
-    docker run --volume "$(pwd):/package" "${DOCKER_IMAGE}" /bin/bash -c "cd /package; swift --version; swift package clean; swift build; swift test"
+    docker run --volume "$(pwd):/package" "${DOCKER_IMAGE}" /bin/bash -c "cd /package; swift --version; swift package clean; swift build; swift test --parallel --filter UnitTests; swift test --filter PerformanceTests"
 fi
