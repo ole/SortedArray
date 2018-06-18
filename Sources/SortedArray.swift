@@ -19,7 +19,7 @@ public struct SortedArray<Element> {
     }
 
     /// Initializes the array with a sequence of unsorted elements and a comparison predicate.
-    public init<S: Sequence>(unsorted: S, areInIncreasingOrder: @escaping Comparator<Element>) where S.Iterator.Element == Element {
+    public init<S: Sequence>(unsorted: S, areInIncreasingOrder: @escaping Comparator<Element>) where S.Element == Element {
         let sorted = unsorted.sorted(by: areInIncreasingOrder)
         self._elements = sorted
         self.areInIncreasingOrder = areInIncreasingOrder
@@ -30,7 +30,7 @@ public struct SortedArray<Element> {
     /// This is faster than `init(unsorted:areInIncreasingOrder:)` because the elements don't have to sorted again.
     ///
     /// - Precondition: `sorted` is sorted according to the given comparison predicate. If you violate this condition, the behavior is undefined.
-    public init<S: Sequence>(sorted: S, areInIncreasingOrder: @escaping Comparator<Element>) where S.Iterator.Element == Element {
+    public init<S: Sequence>(sorted: S, areInIncreasingOrder: @escaping Comparator<Element>) where S.Element == Element {
         self._elements = Array(sorted)
         self.areInIncreasingOrder = areInIncreasingOrder
     }
@@ -55,7 +55,7 @@ public struct SortedArray<Element> {
     /// we only need to re-sort once.
     ///
     /// - Complexity: O(_n * log(n)_) where _n_ is the size of the resulting array.
-    public mutating func insert<S: Sequence>(contentsOf newElements: S) where S.Iterator.Element == Element {
+    public mutating func insert<S: Sequence>(contentsOf newElements: S) where S.Element == Element {
         _elements.append(contentsOf: newElements)
         _elements.sort(by: areInIncreasingOrder)
     }
@@ -68,7 +68,7 @@ extension SortedArray where Element: Comparable {
     }
 
     /// Initializes the array with a sequence of unsorted elements. Uses `<` as the comparison predicate.
-    public init<S: Sequence>(unsorted: S) where S.Iterator.Element == Element {
+    public init<S: Sequence>(unsorted: S) where S.Element == Element {
         self.init(unsorted: unsorted, areInIncreasingOrder: <)
     }
 
@@ -77,7 +77,7 @@ extension SortedArray where Element: Comparable {
     /// This is faster than `init(unsorted:)` because the elements don't have to sorted again.
     ///
     /// - Precondition: `sorted` is sorted according to the `<` predicate. If you violate this condition, the behavior is undefined.
-    public init<S: Sequence>(sorted: S) where S.Iterator.Element == Element {
+    public init<S: Sequence>(sorted: S) where S.Element == Element {
         self.init(sorted: sorted, areInIncreasingOrder: <)
     }
 }
