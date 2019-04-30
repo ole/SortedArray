@@ -26,6 +26,22 @@ class PerformanceTests: XCTestCase {
         }
     }
 
+    func testPerformanceOfFirstIndexWhere() {
+        let sourceArray = Array(repeating: 500, count: 1_000_000) + Array(repeating: 40, count: 1_000_000) + Array(repeating: 3, count: 1_000_000)
+        let sut = SortedArray(unsorted: sourceArray)
+        measure {
+            XCTAssertEqual(sut.firstIndex(where: { $0 >= 500 }), 2_000_000)
+        }
+    }
+
+    func testPerformanceOfLastIndexWhere() {
+        let sourceArray = Array(repeating: 500, count: 1_000_000) + Array(repeating: 40, count: 1_000_000) + Array(repeating: 3, count: 1_000_000)
+        let sut = SortedArray(unsorted: sourceArray)
+        measure {
+            XCTAssertEqual(sut.lastIndex(where: { $0 <= 3 }), 999_999)
+        }
+    }
+
     func testPerformanceOfIndexOfObject() {
         let sourceArray = Array(repeating: Box(500), count: 1_000_000) + Array(repeating: Box(40), count: 1_000_000) + Array(repeating: Box(3), count: 1_000_000)
         let sut = SortedArray(unsorted: sourceArray)
@@ -39,6 +55,22 @@ class PerformanceTests: XCTestCase {
         let sut = SortedArray(unsorted: sourceArray)
         measure {
             XCTAssertEqual(sut.lastIndex(of: Box(3)), 999_999)
+        }
+    }
+
+    func testPerformanceOfFirstIndexWhereObject() {
+        let sourceArray = Array(repeating: Box(500), count: 1_000_000) + Array(repeating: Box(40), count: 1_000_000) + Array(repeating: Box(3), count: 1_000_000)
+        let sut = SortedArray(unsorted: sourceArray)
+        measure {
+            XCTAssertEqual(sut.firstIndex(where: { $0 >= Box(500) }), 2_000_000)
+        }
+    }
+
+    func testPerformanceOfLastIndexWhereObject() {
+        let sourceArray = Array(repeating: Box(500), count: 1_000_000) + Array(repeating: Box(40), count: 1_000_000) + Array(repeating: Box(3), count: 1_000_000)
+        let sut = SortedArray(unsorted: sourceArray)
+        measure {
+            XCTAssertEqual(sut.lastIndex(where: { $0 <= Box(3) }), 999_999)
         }
     }
 
@@ -56,6 +88,20 @@ class PerformanceTests: XCTestCase {
             XCTAssertEqual(sut.lastIndex(of: Box(1_999_999)), 1_999_999)
         }
     }
+
+    func testPerformanceOfFirstIndexWhereObjectInRange() {
+        let sut = SortedArray(sorted: (0..<3_000_000).lazy.map(Box.init))
+        measure {
+            XCTAssertEqual(sut.firstIndex(where: { $0 >= Box(500) }), 500)
+        }
+    }
+
+    func testPerformanceOfLastIndexWhereObjectInRange() {
+        let sut = SortedArray(sorted: (0..<3_000_000).lazy.map(Box.init))
+        measure {
+            XCTAssertEqual(sut.lastIndex(where: { $0 <= Box(1_999_999) }), 1_999_999)
+        }
+    }
 }
 
 extension PerformanceTests {
@@ -64,10 +110,16 @@ extension PerformanceTests {
             ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests),
             ("testPerformanceOfIndexOf", testPerformanceOfIndexOf),
             ("testPerformanceOfLastIndexOf", testPerformanceOfLastIndexOf),
+            ("testPerformanceOfFirstIndexWhere", testPerformanceOfFirstIndexWhere),
+            ("testPerformanceOfLastIndexWhere", testPerformanceOfLastIndexWhere),
             ("testPerformanceOfIndexOfObject", testPerformanceOfIndexOfObject),
             ("testPerformanceOfLastIndexOfObject", testPerformanceOfLastIndexOfObject),
+            ("testPerformanceOfFirstIndexWhereObject", testPerformanceOfFirstIndexWhereObject),
+            ("testPerformanceOfLastIndexWhereObject", testPerformanceOfLastIndexWhereObject),
             ("testPerformanceOfIndexOfObjectInRange", testPerformanceOfIndexOfObjectInRange),
             ("testPerformanceOfLastIndexOfObjectInRange", testPerformanceOfLastIndexOfObjectInRange),
+            ("testPerformanceOfFirstIndexWhereObjectInRange", testPerformanceOfFirstIndexWhereObjectInRange),
+            ("testPerformanceOfLastIndexWhereObjectInRange", testPerformanceOfLastIndexWhereObjectInRange),
         ]
     }
 }

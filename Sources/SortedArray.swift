@@ -273,6 +273,39 @@ extension SortedArray {
         }
         return match
     }
+    
+    /// Returns the first index in which an element of the collection satisfies the given predicate.
+    ///
+    /// - Requires: The `predicate` must return `false` for elements of the array up to a given point, and `true` for
+    ///   all elements after that point _(the opposite of `lastIndex(where:)`)_.
+    ///   The given point may be before the first element or after the last element; i.e. it is valid to return `true`
+    ///   for all elements or `false` for all elements.
+    ///   For most use-cases, the `predicate` closure will use the form `{ $0 > … }` or `{ $0 >= … }` _(or equivalent,
+    ///   if the SortedArray was initialized with a custom Comparator)_.
+    ///
+    /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
+    public func firstIndex(where predicate: (Element) throws -> Bool) rethrows -> Index? {
+        var match: Index? = nil
+        if case let .found(m) = try searchFirst(where: predicate) {
+			match = m
+        }
+        return match
+    }
+    
+    /// Returns the first element of the sequence that satisfies the given predicate.
+    ///
+    /// - Requires: The `predicate` must return `false` for elements of the array up to a given point, and `true` for
+    ///   all elements after that point _(the opposite of `last(where:)`)_.
+    ///   The given point may be before the first element or after the last element; i.e. it is valid to return `true`
+    ///   for all elements or `false` for all elements.
+    ///   For most use-cases, the `predicate` closure will use the form `{ $0 > … }` or `{ $0 >= … }` _(or equivalent,
+    ///   if the SortedArray was initialized with a custom Comparator)_.
+    ///
+    /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
+    public func first(where predicate: (Element) throws -> Bool) rethrows -> Element? {
+    	guard let index = try firstIndex(where: predicate) else { return nil }
+    	return self[index]
+    }
 
     /// Returns the first index where the specified value appears in the collection.
     /// Old name for `firstIndex(of:)`.
@@ -347,6 +380,39 @@ extension SortedArray {
         }
         return match
     }
+    
+    /// Returns the index of the last element in the collection that matches the given predicate.
+    ///
+    /// - Requires: The `predicate` must return `true` for elements of the array up to a given point, and `false` for
+    ///   all elements after that point _(the opposite of `firstIndex(where:)`)_.
+    ///   The given point may be before the first element or after the last element; i.e. it is valid to return `true`
+    ///   for all elements or `false` for all elements.
+    ///   For most use-cases, the `predicate` closure will use the form `{ $0 < … }` or `{ $0 <= … }` _(or equivalent,
+    ///   if the SortedArray was initialized with a custom Comparator)_.
+    ///
+    /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
+    public func lastIndex(where predicate: (Element) throws -> Bool) rethrows -> Index? {
+        var match: Index? = nil
+        if case let .found(m) = try searchLast(where: predicate) {
+			match = m
+        }
+        return match
+    }
+    
+    /// Returns the last element of the sequence that satisfies the given predicate.
+    ///
+    /// - Requires: The `predicate` must return `true` for elements of the array up to a given point, and `false` for
+    ///   all elements after that point _(the opposite of `first(where:)`)_.
+    ///   The given point may be before the first element or after the last element; i.e. it is valid to return `true`
+    ///   for all elements or `false` for all elements.
+    ///   For most use-cases, the `predicate` closure will use the form `{ $0 < … }` or `{ $0 <= … }` _(or equivalent,
+    ///   if the SortedArray was initialized with a custom Comparator)_.
+    ///
+    /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
+    public func last(where predicate: (Element) throws -> Bool) rethrows -> Element? {
+    	guard let index = try firstIndex(where: predicate) else { return nil }
+    	return self[index]
+    }
 }
 
 // MARK: - Converting between a stdlib comparator function and Foundation.ComparisonResult
@@ -412,6 +478,84 @@ extension SortedArray {
             return search(for: element, in: range.lowerBound..<middle)
         case .orderedSame:
             return .found(at: middle)
+        }
+    }
+    
+    /// Searches the array for the first element matching the `predicate` using binary search.
+    ///
+    /// - Requires: The `predicate` must return `false` for elements of the array up to a given point, and `true` for
+    ///   all elements after that point _(the opposite of `searchLast(where:)`)_.
+    ///   The given point may be before the first element or after the last element; i.e. it is valid to return `true`
+    ///   for all elements or `false` for all elements.
+    ///   For most use-cases, the `predicate` closure will use the form `{ $0 > … }` or `{ $0 >= … }` _(or equivalent,
+    ///   if the SortedArray was initialized with a custom Comparator)_.
+    ///
+    /// - Parameter predicate: A closure that returns `false` for elements up to a point; and `true` for all after.
+    /// - Returns: If `element` is in the array, returns `.found(at: index)`
+    ///   where `index` is the index of the element in the array.
+    ///   If `element` is not in the array, returns `.notFound(insertAt: index)`
+    ///   where `index` is the index where the element should be inserted to 
+    ///   preserve the sort order.
+    ///   If the array contains multiple elements that are equal to `element`,
+    ///   there is no guarantee which of these is found.
+    ///
+    /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
+    /// - SeeAlso: http://ruby-doc.org/core-2.6.3/Array.html#method-i-bsearch_index
+    fileprivate func searchFirst(where predicate: (Element) throws -> Bool) rethrows -> Match<Index> {
+        return try searchFirst(where: predicate, in: startIndex ..< endIndex)
+    }
+
+    fileprivate func searchFirst(where predicate: (Element) throws -> Bool, in range: Range<Index>) rethrows -> Match<Index> {
+        guard let middle = range.middle else { return .notFound(insertAt: range.upperBound) }
+        if try predicate(self[middle]) {
+        	if middle == 0 {
+        		return .found(at: middle)
+        	} else if !(try predicate(self[index(before: middle)])) {
+        		return .found(at: middle)
+			} else {
+				return try searchFirst(where: predicate, in: range.lowerBound ..< middle)
+			}
+        } else {
+        	return try searchFirst(where: predicate, in: index(after: middle) ..< range.upperBound)
+        }
+    }
+    
+    /// Searches the array for the last element matching the `predicate` using binary search.
+    ///
+    /// - Requires: The `predicate` must return `true` for elements of the array up to a given point, and `false` for
+    ///   all elements after that point _(the opposite of `searchFirst(where:)`)_.
+    ///   The given point may be before the first element or after the last element; i.e. it is valid to return `true`
+    ///   for all elements or `false` for all elements.
+    ///   For most use-cases, the `predicate` closure will use the form `{ $0 < … }` or `{ $0 <= … }` _(or equivalent,
+    ///   if the SortedArray was initialized with a custom Comparator)_.
+    ///
+    /// - Parameter predicate: A closure that returns `false` for elements up to a point; and `true` for all after.
+    /// - Returns: If `element` is in the array, returns `.found(at: index)`
+    ///   where `index` is the index of the element in the array.
+    ///   If `element` is not in the array, returns `.notFound(insertAt: index)`
+    ///   where `index` is the index where the element should be inserted to 
+    ///   preserve the sort order.
+    ///   If the array contains multiple elements that are equal to `element`,
+    ///   there is no guarantee which of these is found.
+    ///
+    /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
+    /// - SeeAlso: http://ruby-doc.org/core-2.6.3/Array.html#method-i-bsearch_index
+    fileprivate func searchLast(where predicate: (Element) throws -> Bool) rethrows -> Match<Index> {
+        return try searchLast(where: predicate, in: startIndex ..< endIndex)
+    }
+
+    fileprivate func searchLast(where predicate: (Element) throws -> Bool, in range: Range<Index>) rethrows -> Match<Index> {
+        guard let middle = range.middle else { return .notFound(insertAt: range.upperBound) }
+        if try predicate(self[middle]) {
+        	if middle == range.upperBound - 1 {
+        	return .found(at: middle)
+        	} else if !(try predicate(self[index(after: middle)])) {
+        		return .found(at: middle)
+			} else {
+				return try searchLast(where: predicate, in: index(after: middle) ..< range.upperBound)
+			}
+        } else {
+        	return try searchLast(where: predicate, in: range.lowerBound ..< middle)
         }
     }
 }
