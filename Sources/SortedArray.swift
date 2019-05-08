@@ -287,7 +287,7 @@ extension SortedArray {
     public func firstIndex(where predicate: (Element) throws -> Bool) rethrows -> Index? {
         var match: Index? = nil
         if case let .found(m) = try searchFirst(where: predicate) {
-			match = m
+            match = m
         }
         return match
     }
@@ -303,8 +303,8 @@ extension SortedArray {
     ///
     /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
     public func first(where predicate: (Element) throws -> Bool) rethrows -> Element? {
-    	guard let index = try firstIndex(where: predicate) else { return nil }
-    	return self[index]
+        guard let index = try firstIndex(where: predicate) else { return nil }
+        return self[index]
     }
 
     /// Returns the first index where the specified value appears in the collection.
@@ -394,7 +394,7 @@ extension SortedArray {
     public func lastIndex(where predicate: (Element) throws -> Bool) rethrows -> Index? {
         var match: Index? = nil
         if case let .found(m) = try searchLast(where: predicate) {
-			match = m
+            match = m
         }
         return match
     }
@@ -410,8 +410,8 @@ extension SortedArray {
     ///
     /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
     public func last(where predicate: (Element) throws -> Bool) rethrows -> Element? {
-    	guard let index = try firstIndex(where: predicate) else { return nil }
-    	return self[index]
+        guard let index = try firstIndex(where: predicate) else { return nil }
+        return self[index]
     }
 }
 
@@ -508,15 +508,15 @@ extension SortedArray {
     fileprivate func searchFirst(where predicate: (Element) throws -> Bool, in range: Range<Index>) rethrows -> Match<Index> {
         guard let middle = range.middle else { return .notFound(insertAt: range.upperBound) }
         if try predicate(self[middle]) {
-        	if middle == 0 {
-        		return .found(at: middle)
-        	} else if !(try predicate(self[index(before: middle)])) {
-        		return .found(at: middle)
-			} else {
-				return try searchFirst(where: predicate, in: range.lowerBound ..< middle)
-			}
+            if middle == 0 {
+                return .found(at: middle)
+            } else if !(try predicate(self[index(before: middle)])) {
+                return .found(at: middle)
+            } else {
+                return try searchFirst(where: predicate, in: range.lowerBound ..< middle)
+            }
         } else {
-        	return try searchFirst(where: predicate, in: index(after: middle) ..< range.upperBound)
+            return try searchFirst(where: predicate, in: index(after: middle) ..< range.upperBound)
         }
     }
     
@@ -547,15 +547,15 @@ extension SortedArray {
     fileprivate func searchLast(where predicate: (Element) throws -> Bool, in range: Range<Index>) rethrows -> Match<Index> {
         guard let middle = range.middle else { return .notFound(insertAt: range.upperBound) }
         if try predicate(self[middle]) {
-        	if middle == range.upperBound - 1 {
-        	return .found(at: middle)
-        	} else if !(try predicate(self[index(after: middle)])) {
-        		return .found(at: middle)
-			} else {
-				return try searchLast(where: predicate, in: index(after: middle) ..< range.upperBound)
-			}
+            if middle == range.upperBound - 1 {
+            return .found(at: middle)
+            } else if !(try predicate(self[index(after: middle)])) {
+                return .found(at: middle)
+            } else {
+                return try searchLast(where: predicate, in: index(after: middle) ..< range.upperBound)
+            }
         } else {
-        	return try searchLast(where: predicate, in: range.lowerBound ..< middle)
+            return try searchLast(where: predicate, in: range.lowerBound ..< middle)
         }
     }
 }
