@@ -175,6 +175,73 @@ class SortedArrayTests: XCTestCase {
         XCTAssertEqual(index, 2)
     }
 
+    func testFirstIndexWhereFindsElementInMiddle() {
+        let sut = SortedArray(unsorted: ["a","z","r","k"])
+        let index = sut.firstIndex(where: { $0 >= "k" })
+        XCTAssertEqual(index, 1)
+    }
+
+    func testFirstIndexWhereFindsFirstElement() {
+        let sut = SortedArray(sorted: 1..<10)
+        let index = sut.firstIndex(where: { $0 >= 1 })
+        XCTAssertEqual(index, 0)
+    }
+
+    func testFirstIndexWhereFindsLastElement() {
+        let sut = SortedArray(sorted: 1..<10)
+        let index = sut.firstIndex(where: { $0 >= 9 })
+        XCTAssertEqual(index, 8)
+    }
+
+    func testFirstIndexWhereReturnsNilWhenNotFound() {
+        let sut = SortedArray(unsorted: "Hello World")
+        let index = sut.firstIndex(where: { $0 > "z"})
+        XCTAssertNil(index)
+    }
+
+    func testFirstIndexWhereReturnsNilForEmptyArray() {
+        let sut = SortedArray<Int>()
+        let index = sut.firstIndex(where: { $0 >= 1 })
+        XCTAssertNil(index)
+    }
+
+    func testFirstIndexWhereCanDealWithSingleElementArray() {
+        let sut = SortedArray<Int>(unsorted: [5])
+        let index = sut.firstIndex(where: { $0 >= 5 })
+        XCTAssertEqual(index, 0)
+    }
+
+    func testFirstIndexWhereFindsFirstIndexOfDuplicateElements1() {
+        let sut = SortedArray(unsorted: [1,2,3,3,3,3,3,3,3,3,4,5])
+        let index = sut.firstIndex(where: { $0 >= 3 })
+        XCTAssertEqual(index, 2)
+    }
+
+    func testFirstIndexWhereFindsFirstIndexOfDuplicateElements2() {
+        let sut = SortedArray(unsorted: [1,4,4,4,4,4,4,4,4,3,2])
+        let index = sut.firstIndex(where: { $0 >= 4 })
+        XCTAssertEqual(index, 3)
+    }
+
+    func testFirstIndexWhereFindsFirstIndexOfDuplicateElements3() {
+        let sut = SortedArray(unsorted: String(repeating: "A", count: 10))
+        let index = sut.firstIndex(where: { $0 >= "A" })
+        XCTAssertEqual(index, 0)
+    }
+
+    func testFirstIndexWhereFindsFirstIndexOfDuplicateElements4() {
+        let sut = SortedArray<Character>(unsorted: Array(repeating: "a", count: 100_000))
+        let index = sut.firstIndex(where: { $0 >= "a" })
+        XCTAssertEqual(index, 0)
+    }
+
+    func testFirstIndexWhereFindsFirstIndexOfDuplicateElements5() {
+        let sourceArray = Array(repeating: 5, count: 100_000) + [1,2,6,7,8,9]
+        let sut = SortedArray(unsorted: sourceArray)
+        let index = sut.firstIndex(where: { $0 >= 5 })
+        XCTAssertEqual(index, 2)
+    }
+
     func testLastIndexOfFindsElementInMiddle() {
         let sut = SortedArray(unsorted: ["a","z","r","k"])
         let index = sut.lastIndex(of: "k")
@@ -226,6 +293,60 @@ class SortedArrayTests: XCTestCase {
     func testLastIndexOfFindsLastIndexOfDuplicateElements3() {
         let sut = SortedArray(unsorted: String(repeating: "A", count: 10))
         let index = sut.lastIndex(of: "A")
+        XCTAssertEqual(index, 9)
+    }
+
+    func testLastIndexWhereFindsElementInMiddle() {
+        let sut = SortedArray(unsorted: ["a","z","r","k"])
+        let index = sut.lastIndex(where: { $0 <= "k" })
+        XCTAssertEqual(index, 1)
+    }
+
+    func testLastIndexWhereFindsFirstElement() {
+        let sut = SortedArray(sorted: 1..<10)
+        let index = sut.lastIndex(where: { $0 <= 1 })
+        XCTAssertEqual(index, 0)
+    }
+
+    func testLastIndexWhereFindsLastElement() {
+        let sut = SortedArray(sorted: 1..<10)
+        let index = sut.lastIndex(where: { $0 <= 9 })
+        XCTAssertEqual(index, 8)
+    }
+
+    func testLastIndexWhereReturnsNilWhenNotFound() {
+        let sut = SortedArray(unsorted: "Hello World")
+        let index = sut.lastIndex(where: { $0 < " " })
+        XCTAssertNil(index)
+    }
+
+    func testLastIndexWhereReturnsNilForEmptyArray() {
+        let sut = SortedArray<Int>()
+        let index = sut.lastIndex(where: { $0 <= 1 })
+        XCTAssertNil(index)
+    }
+
+    func testLastIndexWhereCanDealWithSingleElementArray() {
+        let sut = SortedArray<Int>(unsorted: [5])
+        let index = sut.lastIndex(where: { $0 <= 5 })
+        XCTAssertEqual(index, 0)
+    }
+
+    func testLastIndexWhereFindsLastIndexOfDuplicateElements1() {
+        let sut = SortedArray(unsorted: [1,2,3,3,3,3,3,3,3,3,4,5])
+        let index = sut.lastIndex(where: { $0 <= 3 })
+        XCTAssertEqual(index, 9)
+    }
+
+    func testLastIndexWhereFindsLastIndexOfDuplicateElements2() {
+        let sut = SortedArray(unsorted: [1,4,4,4,4,4,4,4,4,3,2])
+        let index = sut.lastIndex(where: { $0 <= 4 })
+        XCTAssertEqual(index, 10)
+    }
+
+    func testLastIndexWhereFindsLastIndexOfDuplicateElements3() {
+        let sut = SortedArray(unsorted: String(repeating: "A", count: 10))
+        let index = sut.lastIndex(where: { $0 <= "A" })
         XCTAssertEqual(index, 9)
     }
 
@@ -400,6 +521,17 @@ extension SortedArrayTests {
             ("testIndexOfFindsFirstIndexOfDuplicateElements4", testIndexOfFindsFirstIndexOfDuplicateElements4),
             ("testIndexOfFindsFirstIndexOfDuplicateElements5", testIndexOfFindsFirstIndexOfDuplicateElements4),
             ("testIndexOfExistsAndIsAnAliasForFirstIndexOf", testIndexOfExistsAndIsAnAliasForFirstIndexOf),
+            ("testFirstIndexWhereFindsElementInMiddle", testFirstIndexWhereFindsElementInMiddle),
+            ("testFirstIndexWhereFindsFirstElement", testFirstIndexWhereFindsFirstElement),
+            ("testFirstIndexWhereFindsLastElement", testFirstIndexWhereFindsLastElement),
+            ("testFirstIndexWhereReturnsNilWhenNotFound", testFirstIndexWhereReturnsNilWhenNotFound),
+            ("testFirstIndexWhereReturnsNilForEmptyArray", testFirstIndexWhereReturnsNilForEmptyArray),
+            ("testFirstIndexWhereCanDealWithSingleElementArray", testFirstIndexWhereCanDealWithSingleElementArray),
+            ("testFirstIndexWhereFindsFirstIndexOfDuplicateElements1", testFirstIndexWhereFindsFirstIndexOfDuplicateElements1),
+            ("testFirstIndexWhereFindsFirstIndexOfDuplicateElements2", testFirstIndexWhereFindsFirstIndexOfDuplicateElements2),
+            ("testFirstIndexWhereFindsFirstIndexOfDuplicateElements3", testFirstIndexWhereFindsFirstIndexOfDuplicateElements3),
+            ("testFirstIndexWhereFindsFirstIndexOfDuplicateElements4", testFirstIndexWhereFindsFirstIndexOfDuplicateElements4),
+            ("testFirstIndexWhereFindsFirstIndexOfDuplicateElements5", testFirstIndexWhereFindsFirstIndexOfDuplicateElements5),
             ("testLastIndexOfFindsElementInMiddle", testLastIndexOfFindsElementInMiddle),
             ("testLastIndexOfFindsFirstElement", testLastIndexOfFindsFirstElement),
             ("testLastIndexOfFindsLastElement", testLastIndexOfFindsLastElement),
@@ -409,6 +541,15 @@ extension SortedArrayTests {
             ("testLastIndexOfFindsLastIndexOfDuplicateElements1", testLastIndexOfFindsLastIndexOfDuplicateElements1),
             ("testLastIndexOfFindsLastIndexOfDuplicateElements2", testLastIndexOfFindsLastIndexOfDuplicateElements2),
             ("testLastIndexOfFindsLastIndexOfDuplicateElements3", testLastIndexOfFindsLastIndexOfDuplicateElements3),
+            ("testLastIndexWhereFindsElementInMiddle", testLastIndexWhereFindsElementInMiddle),
+            ("testLastIndexWhereFindsFirstElement", testLastIndexWhereFindsFirstElement),
+            ("testLastIndexWhereFindsLastElement", testLastIndexWhereFindsLastElement),
+            ("testLastIndexWhereReturnsNilWhenNotFound", testLastIndexWhereReturnsNilWhenNotFound),
+            ("testLastIndexWhereReturnsNilForEmptyArray", testLastIndexWhereReturnsNilForEmptyArray),
+            ("testLastIndexWhereCanDealWithSingleElementArray", testLastIndexWhereCanDealWithSingleElementArray),
+            ("testLastIndexWhereFindsLastIndexOfDuplicateElements1", testLastIndexWhereFindsLastIndexOfDuplicateElements1),
+            ("testLastIndexWhereFindsLastIndexOfDuplicateElements2", testLastIndexWhereFindsLastIndexOfDuplicateElements2),
+            ("testLastIndexWhereFindsLastIndexOfDuplicateElements3", testLastIndexWhereFindsLastIndexOfDuplicateElements3),
             ("testsContains", testsContains),
             ("testMin", testMin),
             ("testMax", testMax),
