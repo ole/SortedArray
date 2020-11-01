@@ -108,6 +108,14 @@ extension SortedArray where Element: Comparable {
     }
 }
 
+extension SortedArray: ExpressibleByArrayLiteral where Element: Comparable {
+    
+    public init(arrayLiteral elements: Element...) {
+        self.init(sorted: elements)
+    }
+    
+}
+
 extension SortedArray: RandomAccessCollection {
     public typealias Index = Int
 
