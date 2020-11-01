@@ -1,5 +1,30 @@
 import Foundation // Needed for ComparisonResult (used privately)
 
+public extension Sequence {
+    
+    /// Check wheter a sequence is sorted or not according to the comparator function sent in parameters
+    func isSorted(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows -> Bool {
+        var it = makeIterator()
+        guard var previous = it.next() else {
+            return true
+        }
+        
+        while let current = it.next() {
+            if try !areInIncreasingOrder(previous, current) {
+                return false
+            }
+            previous = current
+        }
+        return true
+    }
+}
+
+public extension Sequence where Element: Comparable {
+    func isSorted() -> Bool {
+        return isSorted(by: <=)
+    }
+}
+
 /// An array that keeps its elements sorted at all times.
 public struct SortedArray<Element> {
     /// The backing store
@@ -31,6 +56,7 @@ public struct SortedArray<Element> {
     ///
     /// - Precondition: `sorted` is sorted according to the given comparison predicate. If you violate this condition, the behavior is undefined.
     public init<S: Sequence>(sorted: S, areInIncreasingOrder: @escaping Comparator<Element>) where S.Element == Element {
+        assert(sorted.isSorted(by: areInIncreasingOrder), "Sorted sequence was not sorted")
         self._elements = Array(sorted)
         self.areInIncreasingOrder = areInIncreasingOrder
     }
