@@ -1,29 +1,5 @@
-import Foundation // Needed for ComparisonResult (used privately)
 
-public extension Sequence {
-    
-    /// Check wheter a sequence is sorted or not according to the comparator function sent in parameters
-    func isSorted(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows -> Bool {
-        var it = makeIterator()
-        guard var previous = it.next() else {
-            return true
-        }
-        
-        while let current = it.next() {
-            if try !areInIncreasingOrder(previous, current) {
-                return false
-            }
-            previous = current
-        }
-        return true
-    }
-}
-
-public extension Sequence where Element: Comparable {
-    func isSorted() -> Bool {
-        return isSorted(by: <=)
-    }
-}
+import Foundation
 
 /// An array that keeps its elements sorted at all times.
 public struct SortedArray<Element> {
@@ -618,3 +594,30 @@ extension SortedArray {
         }
     }
 #endif
+
+public extension Sequence {
+    
+    /// Check wheter a sequence is sorted or not according to the comparator function sent in parameters
+    func isSorted(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows -> Bool {
+        var it = makeIterator()
+        guard var previous = it.next() else {
+            return true
+        }
+        
+        while let current = it.next() {
+            if try !areInIncreasingOrder(previous, current) {
+                return false
+            }
+            previous = current
+        }
+        return true
+    }
+}
+
+public extension Sequence where Element: Comparable {
+    
+    /// Check wheter a sequence is sorted or not
+    func isSorted() -> Bool {
+        return isSorted(by: <=)
+    }
+}
