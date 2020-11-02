@@ -61,6 +61,10 @@ public struct SortedArray<Element> {
         _elements.append(contentsOf: newElements)
         _elements.sort(by: areInIncreasingOrder)
     }
+    
+    public mutating func reserveCapacity(_ minimumCapacity: Int) {
+        _elements.reserveCapacity(minimumCapacity)
+    }
 }
 
 extension SortedArray where Element: Comparable {
