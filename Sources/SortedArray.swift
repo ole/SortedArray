@@ -142,7 +142,7 @@ extension SortedArray {
     /// - Returns: The element at the specified index.
     /// - Complexity: O(_n_), where _n_ is the length of the array.
     @discardableResult
-    public mutating func remove(at index: Int) -> Element {
+    public mutating func remove(at index: Index) -> Element {
         return _elements.remove(at: index)
     }
 
@@ -152,7 +152,7 @@ extension SortedArray {
     ///   bounds of the range must be valid indices of the array.
     ///
     /// - Complexity: O(_n_), where _n_ is the length of the array.
-    public mutating func removeSubrange(_ bounds: Range<Int>) {
+    public mutating func removeSubrange(_ bounds: Range<Index>) {
         _elements.removeSubrange(bounds)
     }
 
@@ -162,7 +162,7 @@ extension SortedArray {
     ///   bounds of the range must be valid indices of the array.
     ///
     /// - Complexity: O(_n_), where _n_ is the length of the array.
-    public mutating func removeSubrange(_ bounds: ClosedRange<Int>) {
+    public mutating func removeSubrange(_ bounds: ClosedRange<Index>) {
         _elements.removeSubrange(bounds)
     }
 
@@ -184,7 +184,7 @@ extension SortedArray {
         ///   bounds of the range must be valid indices of the array.
         ///
         /// - Complexity: O(_n_), where _n_ is the length of the array.
-        public mutating func removeSubrange(_ bounds: CountableRange<Int>) {
+        public mutating func removeSubrange(_ bounds: CountableRange<Index>) {
             _elements.removeSubrange(bounds)
         }
 
@@ -194,7 +194,7 @@ extension SortedArray {
         ///   bounds of the range must be valid indices of the array.
         ///
         /// - Complexity: O(_n_), where _n_ is the length of the array.
-        public mutating func removeSubrange(_ bounds: CountableClosedRange<Int>) {
+        public mutating func removeSubrange(_ bounds: CountableClosedRange<Index>) {
             _elements.removeSubrange(bounds)
         }
     #endif
