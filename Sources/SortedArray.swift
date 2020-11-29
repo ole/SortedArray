@@ -111,7 +111,14 @@ extension SortedArray: RandomAccessCollection {
     }
 
     public subscript(position: Index) -> Element {
-        return _elements[position]
+        get {
+            return _elements[position]
+        }
+        set {
+            // FIXME: There is a more efficient way to do this (current: O(2*n), theorical: O(n))
+            remove(at: position)
+            insert(newValue)
+        }
     }
 }
 
