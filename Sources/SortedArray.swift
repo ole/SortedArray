@@ -1,5 +1,4 @@
 
-import Foundation
 
 /// An array that keeps its elements sorted at all times.
 public struct SortedArray<Element> {
@@ -438,7 +437,14 @@ extension SortedArray {
 
 // MARK: - Converting between a stdlib comparator function and Foundation.ComparisonResult
 extension SortedArray {
-    fileprivate func compare(_ lhs: Element, _ rhs: Element) -> Foundation.ComparisonResult {
+    
+    fileprivate enum ComparisonResult {
+        case orderedAscending
+        case orderedDescending
+        case orderedSame
+    }
+    
+    fileprivate func compare(_ lhs: Element, _ rhs: Element) -> Self.ComparisonResult {
         if areInIncreasingOrder(lhs, rhs) {
             return .orderedAscending
         } else if areInIncreasingOrder(rhs, lhs) {
