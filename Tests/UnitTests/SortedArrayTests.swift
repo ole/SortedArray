@@ -48,6 +48,44 @@ class SortedArrayTests: XCTestCase {
         let sut = SortedArray(unsorted: ["a","c","b"])
         assertElementsEqual(sut, ["a","b","c"])
     }
+    
+    func testSortedArrayWithKeyPath() {
+        var sut1 = SortedArray<String>(by: \.count)
+        sut1.insert("Arthur")
+        sut1.insert("Zoro")
+        sut1.insert("Wax")
+        assertElementsEqual(sut1, ["Wax", "Zoro", "Arthur"])
+
+        var sut2 = SortedArray<String>(by: \.self)
+        sut2.insert("Arthur")
+        sut2.insert("Zoro")
+        sut2.insert("Wax")
+        assertElementsEqual(sut2, ["Arthur", "Wax", "Zoro"])
+    }
+    
+    func testSortedArrayWithKeyPathSorted() {
+        struct Person {
+            var firstName: String
+            var lastName: String
+        }
+        let a = Person(firstName: "A", lastName: "Smith")
+        let b = Person(firstName: "B", lastName: "Jones")
+        let c = Person(firstName: "C", lastName: "Lewis")
+        let sut = SortedArray<Person>(sorted: [b, c, a], by: \.lastName)
+        assertElementsEqual(sut.map { $0.firstName }, ["B", "C", "A"])
+    }
+    
+    func testSortedArrayWithKeyPathUnsorted() {
+        struct Person {
+            var firstName: String
+            var lastName: String
+        }
+        let a = Person(firstName: "A", lastName: "Smith")
+        let b = Person(firstName: "B", lastName: "Jones")
+        let c = Person(firstName: "C", lastName: "Lewis")
+        let sut = SortedArray<Person>(unsorted: [a, b, c], by: \.lastName)
+        assertElementsEqual(sut.map { $0.firstName }, ["B", "C", "A"])
+    }
 
     func testInsertAtBeginningPreservesSortOrder() {
         var sut = SortedArray(unsorted: 1...3)
@@ -525,6 +563,9 @@ extension SortedArrayTests {
             ("testInitSortedDoesntResort", testInitSortedDoesntResort),
             ("testSortedArrayCanUseArbitraryComparisonPredicate", testSortedArrayCanUseArbitraryComparisonPredicate),
             ("testConvenienceInitsUseLessThan", testConvenienceInitsUseLessThan),
+            ("testSortedArrayWithKeyPath", testSortedArrayWithKeyPath),
+            ("testSortedArrayWithKeyPathSorted", testSortedArrayWithKeyPathSorted),
+            ("testSortedArrayWithKeyPathUnsorted", testSortedArrayWithKeyPathUnsorted),
             ("testInsertAtBeginningPreservesSortOrder", testInsertAtBeginningPreservesSortOrder),
             ("testInsertInMiddlePreservesSortOrder", testInsertInMiddlePreservesSortOrder),
             ("testInsertAtEndPreservesSortOrder", testInsertAtEndPreservesSortOrder),

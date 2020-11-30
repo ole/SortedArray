@@ -87,8 +87,42 @@ extension SortedArray where Element: Comparable {
     }
 }
 
+extension SortedArray {
+    
+    /// Initializes an empty array.
+    ///
+    /// - Parameter keyPath: The comparable element used to determine order.
+    public init<T: Comparable>(by keyPath: KeyPath<Element, T>) {
+        self.init(areInIncreasingOrder: { $0[keyPath: keyPath] < $1[keyPath: keyPath] })
+    }
+    
+    /// Initializes the array with a sequence of unsorted elements and a comparison element keyPath.
+    public init<S: Sequence, T: Comparable>(unsorted: S, by keyPath: KeyPath<Element, T>) where S.Element == Element {
+        let areInIncreasingOrder: Comparator<Element> = { $0[keyPath: keyPath] < $1[keyPath: keyPath] }
+        let sorted = unsorted.sorted(by: areInIncreasingOrder)
+        self._elements = sorted
+        self.areInIncreasingOrder = areInIncreasingOrder
+    }
+    
+    /// Initializes the array with a sequence that is already sorted according to the given keyPath.
+    ///
+    /// This is faster than `init(unsorted:by:)` because the elements don't have to be sorted again.
+    ///
+    /// - Precondition: `sorted` is sorted according to the given comparison predicate. If you violate this condition, the behavior is undefined.
+    public init<S: Sequence, T: Comparable>(sorted: S, by keyPath: KeyPath<Element, T>) where S.Element == Element {
+        let areInIncreasingOrder: Comparator<Element> = { $0[keyPath: keyPath] < $1[keyPath: keyPath] }
+        assert(sorted.isSorted(by: areInIncreasingOrder), "Sorted sequence was not sorted")
+        self._elements = Array(sorted)
+        self.areInIncreasingOrder = areInIncreasingOrder
+    }
+
+}
+
 extension SortedArray: ExpressibleByArrayLiteral where Element: Comparable {
     
+    /// Initialize the array with an array literal of comparable elements in a sorted order
+    /// The initializer will assert that the value are sorted
+    /// If you want it to be sorted, then use `init(unsorted:)` instead
     public init(arrayLiteral elements: Element...) {
         self.init(sorted: elements)
     }
