@@ -1,4 +1,4 @@
-import Foundation // Needed for ComparisonResult (used privately)
+
 
 /// An array that keeps its elements sorted at all times.
 public struct SortedArray<Element> {
@@ -31,6 +31,7 @@ public struct SortedArray<Element> {
     ///
     /// - Precondition: `sorted` is sorted according to the given comparison predicate. If you violate this condition, the behavior is undefined.
     public init<S: Sequence>(sorted: S, areInIncreasingOrder: @escaping Comparator<Element>) where S.Element == Element {
+        assert(sorted.isSorted(by: areInIncreasingOrder), "Sorted sequence was not sorted")
         self._elements = Array(sorted)
         self.areInIncreasingOrder = areInIncreasingOrder
     }
@@ -59,6 +60,10 @@ public struct SortedArray<Element> {
         _elements.append(contentsOf: newElements)
         _elements.sort(by: areInIncreasingOrder)
     }
+    
+    public mutating func reserveCapacity(_ minimumCapacity: Int) {
+        _elements.reserveCapacity(minimumCapacity)
+    }
 }
 
 extension SortedArray where Element: Comparable {
@@ -82,6 +87,48 @@ extension SortedArray where Element: Comparable {
     }
 }
 
+extension SortedArray {
+    
+    /// Initializes an empty array.
+    ///
+    /// - Parameter keyPath: The comparable element used to determine order.
+    public init<T: Comparable>(by keyPath: KeyPath<Element, T>) {
+        self.init(areInIncreasingOrder: { $0[keyPath: keyPath] < $1[keyPath: keyPath] })
+    }
+    
+    /// Initializes the array with a sequence of unsorted elements and a comparison element keyPath.
+    public init<S: Sequence, T: Comparable>(unsorted: S, by keyPath: KeyPath<Element, T>) where S.Element == Element {
+        let areInIncreasingOrder: Comparator<Element> = { $0[keyPath: keyPath] < $1[keyPath: keyPath] }
+        let sorted = unsorted.sorted(by: areInIncreasingOrder)
+        self._elements = sorted
+        self.areInIncreasingOrder = areInIncreasingOrder
+    }
+    
+    /// Initializes the array with a sequence that is already sorted according to the given keyPath.
+    ///
+    /// This is faster than `init(unsorted:by:)` because the elements don't have to be sorted again.
+    ///
+    /// - Precondition: `sorted` is sorted according to the given comparison predicate. If you violate this condition, the behavior is undefined.
+    public init<S: Sequence, T: Comparable>(sorted: S, by keyPath: KeyPath<Element, T>) where S.Element == Element {
+        let areInIncreasingOrder: Comparator<Element> = { $0[keyPath: keyPath] < $1[keyPath: keyPath] }
+        assert(sorted.isSorted(by: areInIncreasingOrder), "Sorted sequence was not sorted")
+        self._elements = Array(sorted)
+        self.areInIncreasingOrder = areInIncreasingOrder
+    }
+
+}
+
+extension SortedArray: ExpressibleByArrayLiteral where Element: Comparable {
+    
+    /// Initialize the array with an array literal of comparable elements in a sorted order
+    /// The initializer will assert that the value are sorted
+    /// If you want it to be sorted, then use `init(unsorted:)` instead
+    public init(arrayLiteral elements: Element...) {
+        self.init(sorted: elements)
+    }
+    
+}
+
 extension SortedArray: RandomAccessCollection {
     public typealias Index = Int
 
@@ -97,7 +144,14 @@ extension SortedArray: RandomAccessCollection {
     }
 
     public subscript(position: Index) -> Element {
-        return _elements[position]
+        get {
+            return _elements[position]
+        }
+        set {
+            // FIXME: There is a more efficient way to do this (current: O(2*n), theorical: O(n))
+            remove(at: position)
+            insert(newValue)
+        }
     }
 }
 
@@ -128,7 +182,7 @@ extension SortedArray {
     /// - Returns: The element at the specified index.
     /// - Complexity: O(_n_), where _n_ is the length of the array.
     @discardableResult
-    public mutating func remove(at index: Int) -> Element {
+    public mutating func remove(at index: Index) -> Element {
         return _elements.remove(at: index)
     }
 
@@ -138,7 +192,7 @@ extension SortedArray {
     ///   bounds of the range must be valid indices of the array.
     ///
     /// - Complexity: O(_n_), where _n_ is the length of the array.
-    public mutating func removeSubrange(_ bounds: Range<Int>) {
+    public mutating func removeSubrange(_ bounds: Range<Index>) {
         _elements.removeSubrange(bounds)
     }
 
@@ -148,7 +202,7 @@ extension SortedArray {
     ///   bounds of the range must be valid indices of the array.
     ///
     /// - Complexity: O(_n_), where _n_ is the length of the array.
-    public mutating func removeSubrange(_ bounds: ClosedRange<Int>) {
+    public mutating func removeSubrange(_ bounds: ClosedRange<Index>) {
         _elements.removeSubrange(bounds)
     }
 
@@ -170,7 +224,7 @@ extension SortedArray {
         ///   bounds of the range must be valid indices of the array.
         ///
         /// - Complexity: O(_n_), where _n_ is the length of the array.
-        public mutating func removeSubrange(_ bounds: CountableRange<Int>) {
+        public mutating func removeSubrange(_ bounds: CountableRange<Index>) {
             _elements.removeSubrange(bounds)
         }
 
@@ -180,7 +234,7 @@ extension SortedArray {
         ///   bounds of the range must be valid indices of the array.
         ///
         /// - Complexity: O(_n_), where _n_ is the length of the array.
-        public mutating func removeSubrange(_ bounds: CountableClosedRange<Int>) {
+        public mutating func removeSubrange(_ bounds: CountableClosedRange<Index>) {
             _elements.removeSubrange(bounds)
         }
     #endif
@@ -417,7 +471,14 @@ extension SortedArray {
 
 // MARK: - Converting between a stdlib comparator function and Foundation.ComparisonResult
 extension SortedArray {
-    fileprivate func compare(_ lhs: Element, _ rhs: Element) -> Foundation.ComparisonResult {
+    
+    fileprivate enum ComparisonResult {
+        case orderedAscending
+        case orderedDescending
+        case orderedSame
+    }
+    
+    fileprivate func compare(_ lhs: Element, _ rhs: Element) -> Self.ComparisonResult {
         if areInIncreasingOrder(lhs, rhs) {
             return .orderedAscending
         } else if areInIncreasingOrder(rhs, lhs) {
@@ -584,3 +645,30 @@ extension SortedArray {
         }
     }
 #endif
+
+public extension Sequence {
+    
+    /// Check wheter a sequence is sorted or not according to the comparator function sent in parameters
+    func isSorted(by areInIncreasingOrder: (Element, Element) throws -> Bool) rethrows -> Bool {
+        var it = makeIterator()
+        guard var previous = it.next() else {
+            return true
+        }
+        
+        while let current = it.next() {
+            if try !areInIncreasingOrder(previous, current) {
+                return false
+            }
+            previous = current
+        }
+        return true
+    }
+}
+
+public extension Sequence where Element: Comparable {
+    
+    /// Check wheter a sequence is sorted or not
+    func isSorted() -> Bool {
+        return isSorted(by: <=)
+    }
+}
