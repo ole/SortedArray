@@ -8,10 +8,6 @@ Written by Ole Begemann, February 2017.
 
 For more info, see the [GitHub repo](https://github.com/ole/SortedArray) and my accompanying [blog article](https://oleb.net/blog/2017/02/sorted-array/).
 
-## Status
-
-[![Build Status](https://travis-ci.org/ole/SortedArray.svg?branch=master)](https://travis-ci.org/ole/SortedArray)
-
 ## Supported Platforms
 
 The current release supports Swift 4.0 and up.

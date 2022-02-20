@@ -1,0 +1,24 @@
+# GitHub actions documentation:
+# https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+#
+# List of installed software for GitHub actions:
+# https://docs.github.com/en/actions/reference/software-installed-on-github-hosted-runners
+
+name: SwiftPM Linux
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  linux-swiftpm:
+    name: Build and run tests
+    runs-on: ubuntu-20.04
+    # Ubuntu 20.04: Focal
+    # Ubuntu 18.04: Xenial
+    container: swift:focal
+    steps:
+    - uses: actions/checkout@v2
+    - name: Print Swift version
+      run: swift --version
+    - name: Run tests
+      run: swift test
