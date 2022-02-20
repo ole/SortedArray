@@ -242,6 +242,12 @@ class SortedArrayTests: XCTestCase {
         XCTAssertEqual(index, 2)
     }
 
+    func testFirstWhereFindsFirstMatchingElement() {
+        let sut = SortedArray(unsorted: [4, 3, 2, 1])
+        let last = sut.first(where: { $0 >= 2 })
+        XCTAssertEqual(last, 2)
+    }
+
     func testLastIndexOfFindsElementInMiddle() {
         let sut = SortedArray(unsorted: ["a","z","r","k"])
         let index = sut.lastIndex(of: "k")
@@ -348,6 +354,12 @@ class SortedArrayTests: XCTestCase {
         let sut = SortedArray(unsorted: String(repeating: "A", count: 10))
         let index = sut.lastIndex(where: { $0 <= "A" })
         XCTAssertEqual(index, 9)
+    }
+
+    func testLastWhereFindsLastMatchingElement() {
+        let sut = SortedArray(unsorted: [4, 3, 2, 1])
+        let last = sut.last(where: { $0 <= 3 })
+        XCTAssertEqual(last, 3)
     }
 
     func testsContains() {
@@ -532,6 +544,7 @@ extension SortedArrayTests {
             ("testFirstIndexWhereFindsFirstIndexOfDuplicateElements3", testFirstIndexWhereFindsFirstIndexOfDuplicateElements3),
             ("testFirstIndexWhereFindsFirstIndexOfDuplicateElements4", testFirstIndexWhereFindsFirstIndexOfDuplicateElements4),
             ("testFirstIndexWhereFindsFirstIndexOfDuplicateElements5", testFirstIndexWhereFindsFirstIndexOfDuplicateElements5),
+            ("testFirstWhereFindsFirstMatchingElement", testFirstWhereFindsFirstMatchingElement),
             ("testLastIndexOfFindsElementInMiddle", testLastIndexOfFindsElementInMiddle),
             ("testLastIndexOfFindsFirstElement", testLastIndexOfFindsFirstElement),
             ("testLastIndexOfFindsLastElement", testLastIndexOfFindsLastElement),
@@ -550,6 +563,7 @@ extension SortedArrayTests {
             ("testLastIndexWhereFindsLastIndexOfDuplicateElements1", testLastIndexWhereFindsLastIndexOfDuplicateElements1),
             ("testLastIndexWhereFindsLastIndexOfDuplicateElements2", testLastIndexWhereFindsLastIndexOfDuplicateElements2),
             ("testLastIndexWhereFindsLastIndexOfDuplicateElements3", testLastIndexWhereFindsLastIndexOfDuplicateElements3),
+            ("testLastWhereFindsLastMatchingElement", testLastWhereFindsLastMatchingElement),
             ("testsContains", testsContains),
             ("testMin", testMin),
             ("testMax", testMax),
@@ -575,3 +589,15 @@ extension SortedArrayTests {
         ]
     }
 }
+
+struct Pair<A, B> {
+    let first: A
+    let second: B
+
+    init(_ first: A, _ second: B) {
+        self.first = first
+        self.second = second
+    }
+}
+
+extension Pair: Equatable where A: Equatable, B: Equatable {}
