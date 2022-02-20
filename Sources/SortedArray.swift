@@ -410,7 +410,7 @@ extension SortedArray {
     ///
     /// - Complexity: O(_log(n)_), where _n_ is the size of the array.
     public func last(where predicate: (Element) throws -> Bool) rethrows -> Element? {
-        guard let index = try firstIndex(where: predicate) else { return nil }
+        guard let index = try lastIndex(where: predicate) else { return nil }
         return self[index]
     }
 }
